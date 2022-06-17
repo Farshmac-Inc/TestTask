@@ -952,7 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 2
   _charController: {fileID: 5177265326610768632}
-  _animation: {fileID: 0}
+  _animation: {fileID: 111863857214503350}
 --- !u!114 &874317341045775169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -966,7 +966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droppingBombCooldown: 1
-  bombPrefab: {fileID: 8268033650547990949, guid: a6f1e3f3c233f194cb0f60b0c1802c5a, type: 3}
+  bombPrefab: {fileID: 1883854954243688137, guid: 9574f0a157ccfcf4e8542f319664524a, type: 3}
 --- !u!1 &1894852224704676
 GameObject:
   m_ObjectHideFlags: 0
