@@ -11,13 +11,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Walls
+  - Destructible Walls
+  - Bomb
+  - Floor
+  - Finish
+  - Enemy
   - 
   - 
   - 

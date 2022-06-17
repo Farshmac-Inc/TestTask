@@ -8,10 +8,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        var moveVector = new Vector2(Input.GetAxis("Horizontal"), 
-                                     Input.GetAxis("Vertical"));
-        if(moveVector != Vector2.zero) 
-            MoveEvent?.Invoke(moveVector);
+        var moveVector = new Vector2(Input.GetAxis("Horizontal"),
+            Input.GetAxis("Vertical"));
+        MoveEvent?.Invoke(moveVector);
         if (Input.GetKeyDown(KeyCode.Space)) 
             DroppingBombEvent?.Invoke();
     }
