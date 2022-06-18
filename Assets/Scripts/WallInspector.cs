@@ -52,9 +52,9 @@ namespace Game
                 for (int z = 0; z < targetClass.size.y; z++)
                 {
                     var position = targetClass.baseElementPosition + new Vector3(x, 0, z);
-                    targetClass.elements.Add(Instantiate(targetClass.prefab, position,
-                        new Quaternion(), targetClass.transform));
-                    Grid.AddElement(targetClass.type, new Vector2Int((int)position.x, (int)position.y));
+                    var gameObject = Instantiate(targetClass.prefab, position, new Quaternion(), targetClass.transform);
+                    targetClass.elements.Add(gameObject);
+                    Grid.AddElement(targetClass.type, gameObject, new Vector2Int((int)position.x, (int)position.y));
                 }
             }
         }

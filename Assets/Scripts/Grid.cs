@@ -3,9 +3,19 @@ using UnityEngine;
 
 namespace Game
 {
+    public class GridScriptableObject : ScriptableObject
+    {
+        public GridScriptableObject(GridCell[,] grid)
+        {
+            Grid = grid;
+        }
+
+        public GridCell[,] Grid { get; private set; }
+    }
+    
     public class Grid : MonoBehaviour
     {
-        private static GridCellType[,] grid = new GridCellType[20, 15];
+        private static GridCell[,] grid = new GridCell[30, 20];
 
         /// <summary>
         /// Adds an object to a cell on the global grid. 
@@ -13,13 +23,14 @@ namespace Game
         /// <param name="type">The type of object located on the cells.</param>
         /// <param name="position">The position in which the object should be placed.</param>
         /// <returns>If the position in the grid is free then True is returned otherwise False.</returns>
-        public static bool AddElement(GridCellType type, Vector2Int position)
+        public static bool AddElement(GridCellType type, GameObject gameObject, Vector2Int position)
         {
             if (grid == null) return false;
-            var cell = grid[position.x, position.y];
-            if (cell == GridCellType.Empty)
+            ref var cell = ref grid[position.x, position.y];
+            if (cell.type == GridCellType.Empty)
             {
-                cell = type;
+                cell = new GridCell(type, gameObject);
+                Debug.Log(grid[position.x, position.y]);
                 return true;
             }
             return false;
@@ -33,10 +44,16 @@ namespace Game
         public static bool RemoveElement(Vector2Int position)
         {
             if (grid == null) return false;
-            var cell = grid[position.x, position.y];
-            if (cell == GridCellType.WoodWall)
+            if (position.x < 0 || position.x > grid.GetLength(0)) return false;
+            if (position.y < 0 || position.y > grid.GetLength(0)) return false;
+            ref var cell = ref grid[position.x, position.y];
+            Debug.Log(cell.type);
+            if (cell.type == GridCellType.WoodWall)
             {
-                cell = GridCellType.Empty;
+                Debug.Log(cell.gameObject);
+                Destroy(cell.gameObject);
+                cell = new GridCell();
+                cell.type = GridCellType.Empty;
                 return true;
             }
             return false;
