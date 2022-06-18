@@ -1,22 +1,25 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+namespace Game
 {
-    [SerializeField] private float _timeBeforeExplosion;
-    void Start()
+    public class Bomb : MonoBehaviour
     {
-        StartCoroutine(BombTimer());
-    }
+        [SerializeField] private float _timeBeforeExplosion;
 
-    private IEnumerator BombTimer()
-    {
-        var position = transform.position;
-        Vector2 positionCell = new Vector2(Mathf.RoundToInt(position.x),
-                                           Mathf.RoundToInt(position.z));
-        yield return new WaitForSeconds(_timeBeforeExplosion);
-        Debug.Log("Bomb explosion in cell: " + positionCell.ToString());
-        Destroy(this.gameObject);
+        void Start()
+        {
+            StartCoroutine(BombTimer());
+        }
+
+        private IEnumerator BombTimer()
+        {
+            var position = transform.position;
+            Vector2 positionCell = new Vector2(Mathf.RoundToInt(position.x),
+                Mathf.RoundToInt(position.z));
+            yield return new WaitForSeconds(_timeBeforeExplosion);
+            Debug.Log("Bomb explosion in cell: " + positionCell.ToString());
+            Destroy(this.gameObject);
+        }
     }
 }
