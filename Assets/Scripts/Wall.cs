@@ -7,7 +7,8 @@ namespace Game
     {
         [SerializeField] internal Vector2Int size = Vector2Int.one;
         [SerializeField] internal GameObject prefab;
-        internal List<GameObject> elements = new List<GameObject>();
+        [SerializeField] internal GridCellType type;
+        internal readonly List<GameObject> elements = new List<GameObject>();
         internal Vector3 baseElementPosition;
     }
 }

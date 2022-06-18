@@ -4,25 +4,28 @@ namespace Game
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed;
-        [SerializeField] private CharacterController _charController;
-        [SerializeField] private Animation _animation;
+        [SerializeField] private float moveSpeed;
+        [SerializeField] private CharacterController charController;
+        [SerializeField] private Animation animation;
 
-
+        /// <summary>
+        /// Sets the movement of the object.
+        /// </summary>
+        /// <param name="moveVector">The vector of the direction of movement.</param>
         public void Move(Vector2 moveVector)
         {
             if (moveVector == Vector2.zero)
             {
-                _animation.Play("Idle");
+                animation.Play("Idle");
                 return;
             }
 
-            _animation.Play("Run");
+            animation.Play("Run");
             Rotate(moveVector);
-            moveVector *= _moveSpeed;
+            moveVector *= moveSpeed;
             var deltaPosition = new Vector3(moveVector.x, 0, moveVector.y);
             deltaPosition *= Time.deltaTime;
-            _charController.Move(deltaPosition);
+            charController.Move(deltaPosition);
         }
 
         private void Rotate(Vector2 moveVector)

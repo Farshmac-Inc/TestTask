@@ -5,9 +5,9 @@ namespace Game
 {
     public class Bomb : MonoBehaviour
     {
-        [SerializeField] private float _timeBeforeExplosion;
+        [SerializeField] private float timeBeforeExplosion;
 
-        void Start()
+        private void Start()
         {
             StartCoroutine(BombTimer());
         }
@@ -17,7 +17,7 @@ namespace Game
             var position = transform.position;
             Vector2 positionCell = new Vector2(Mathf.RoundToInt(position.x),
                 Mathf.RoundToInt(position.z));
-            yield return new WaitForSeconds(_timeBeforeExplosion);
+            yield return new WaitForSeconds(timeBeforeExplosion);
             Debug.Log("Bomb explosion in cell: " + positionCell.ToString());
             Destroy(this.gameObject);
         }

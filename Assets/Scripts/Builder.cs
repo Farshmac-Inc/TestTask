@@ -4,14 +4,14 @@ namespace Game
 {
     public class Builder : MonoBehaviour
     {
-        [SerializeField] private MovementController _movementController;
-        [SerializeField] private Bomber _bomber;
-        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private MovementController movementController;
+        [SerializeField] private Bomber bomber;
+        [SerializeField] private PlayerInput playerInput;
 
         private void Start()
         {
-            _playerInput.MoveEvent += _movementController.Move;
-            _playerInput.DroppingBombEvent += _bomber.DropBomb;
+            playerInput.MoveEvent += movementController.Move;
+            playerInput.DroppingBombEvent += bomber.DropBomb;
         }
     }
 }

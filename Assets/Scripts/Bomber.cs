@@ -9,6 +9,9 @@ namespace Game
         [SerializeField] private GameObject bombPrefab;
         private bool isBombReady = true;
 
+        /// <summary>
+        /// Dropping the bomb if possible
+        /// </summary>
         public void DropBomb()
         {
             if (!isBombReady) return;

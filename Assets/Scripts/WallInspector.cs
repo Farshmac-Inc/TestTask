@@ -16,7 +16,10 @@ namespace Game
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Create")) GeneratePrefab();
+            if (GUILayout.Button("X", GUILayout.Width(20))) ClearElements();
+            EditorGUILayout.EndHorizontal();
         }
 
         private void CorrectPosition()
@@ -29,18 +32,29 @@ namespace Game
             targetClass.baseElementPosition = correctedPosition;
         }
 
+        private void ClearElements()
+        {
+            foreach (var element in targetClass.elements)
+            {
+                var position = element.transform.position;
+                Grid.RemoveElement(new Vector2Int((int)position.x, (int)position.y));
+                DestroyImmediate(element);
+            }
+            targetClass.elements.Clear();
+        }
+
         private void GeneratePrefab()
         {
             CorrectPosition();
-            foreach (var element in targetClass.elements) DestroyImmediate(element);
-            targetClass.elements.Clear();
-
+            ClearElements();
             for (int x = 0; x < targetClass.size.x; x++)
             {
                 for (int z = 0; z < targetClass.size.y; z++)
                 {
-                    targetClass.elements.Add(Instantiate(targetClass.prefab,
-                        targetClass.baseElementPosition + new Vector3(x, 0, z), new Quaternion()));
+                    var position = targetClass.baseElementPosition + new Vector3(x, 0, z);
+                    targetClass.elements.Add(Instantiate(targetClass.prefab, position,
+                        new Quaternion(), targetClass.transform));
+                    Grid.AddElement(targetClass.type, new Vector2Int((int)position.x, (int)position.y));
                 }
             }
         }
