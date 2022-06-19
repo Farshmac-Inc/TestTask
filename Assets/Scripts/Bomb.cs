@@ -34,7 +34,7 @@ namespace Game
             for (int i = 0; i < explosionAreMask.GetLength(0); i++)
                 for (int j = 0; j < explosionAreMask.GetLength(1); j++)
                 {
-                    if(explosionAreMask[i,j]) Grid.RemoveElement(epicenterPosition - Vector2Int.one);
+                    //if(explosionAreMask[i,j]) Grid.RemoveElement(epicenterPosition - Vector2Int.one);
                 }
         }
     }
