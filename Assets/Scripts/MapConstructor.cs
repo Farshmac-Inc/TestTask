@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game;
 using UnityEngine;
 using UnityEditor;
@@ -10,11 +7,13 @@ namespace MyTools
 {
     public class MapConstructor : EditorWindow
     {
+        #region Fields
         private static MapConstructor window;
         private static GridCell[] prefabs = new GridCell[10];
         private static bool[] isPrefabSettingOpen = new bool[10];
-        private static GridCell[,] map; 
-        
+        private static GridCell[,] map;
+        private static string saveMapDataPath = "Assets/Resource/MapData.asset";
+
         private Vector2 prefabListScrollBarValue = Vector2.zero;
         private GameObject[,] editingGameObjects;
         private GameObject editingGameObjectPrefab;
@@ -23,8 +22,9 @@ namespace MyTools
         private Vector2Int size = Vector2Int.one;
         private Vector2Int lastSizeValue = Vector2Int.zero;
 
-       
+        #endregion
 
+        #region Basic window Methods
 
         public static void InitWindow()
         {
@@ -36,78 +36,140 @@ namespace MyTools
         private void OnGUI()
         {
             EditorGUILayout.BeginVertical();
-            mapSize = EditorGUILayout.Vector2IntField("Map size ", mapSize);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Prefabs List");
-            PrefabList();
-            EditorGUILayout.Space();
-            EditingObjectInfo();
+            {
+                MapSettingsArea();
+                EditorGUILayout.Space();
+                PrefabList();
+                EditorGUILayout.Space();
+                EditingObjectInfo();
+            }
             EditorGUILayout.EndVertical();
         }
 
-        private void EditingObjectInfo()
+        #endregion
+
+        #region Layout Element
+
+        private void MapSettingsArea()
         {
-            if (editingGameObjects == null) return;
-            
-            size = EditorGUILayout.Vector2IntField("Size ", size);
-            if (size != lastSizeValue) UpdateObject();
-            
-            var pos = editingGameObjects[0, 0].transform.position;
-            var newPosition = EditorGUILayout.Vector3IntField("Position ",
-                new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z));
-            editingGameObjects[0, 0].transform.position = newPosition;
-            
-            ButtonApply();
-            lastSizeValue = size;
+            EditorGUILayout.BeginVertical("box");
+            {
+                mapSize = EditorGUILayout.Vector2IntField("Map size ", mapSize);
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Save map path: ");
+                saveMapDataPath = EditorGUILayout.TextField(saveMapDataPath);
+
+                EditorGUILayout.Space();
+                SaveButton();
+                EditorGUILayout.Space();
+            }
+            EditorGUILayout.EndVertical();
         }
 
-        private void ButtonApply()
+        private void SaveButton()
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.Space();
-            if(GUILayout.Button("Apply", GUILayout.Width(70))) ApplyObject();
-            EditorGUILayout.Space();
+            {
+                EditorGUILayout.Space();
+                if (GUILayout.Button("Save map", GUILayout.Width(100))) SaveMap();
+                EditorGUILayout.Space();
+            }
             EditorGUILayout.EndHorizontal();
         }
         
-
         private void PrefabList()
         {
-            prefabListScrollBarValue = EditorGUILayout.BeginScrollView(prefabListScrollBarValue, GUILayout.Height(140));
-            for (int i = 0; i < prefabs.Length; i++) Prefab(i);
-            EditorGUILayout.EndScrollView();
+            EditorGUILayout.BeginVertical("box");
+            {
+                EditorGUILayout.LabelField("Prefabs List");
+                prefabListScrollBarValue =
+                    EditorGUILayout.BeginScrollView(prefabListScrollBarValue, GUILayout.Height(140));
+                for (int i = 0; i < prefabs.Length; i++) Prefab(i);
+                EditorGUILayout.EndScrollView();
+            }
+            EditorGUILayout.EndVertical();
         }
-
 
         private void Prefab(int i)
         {
             ref var prefab = ref prefabs[i];
             ref var isOpen = ref isPrefabSettingOpen[i];
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.BeginHorizontal();
-            isOpen = EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, (i + 1) + ") " + prefab.type.ToString());
-            if (prefab.gameObject != null && prefab.type != GridCellType.Empty)
-                if (GUILayout.Button("Create", GUILayout.Width(70)))
-                    CrateObject(prefab.type, prefab.gameObject);
-            EditorGUILayout.EndHorizontal();
-            if (isOpen) PrefabSetting(ref prefab);
-            EditorGUILayout.EndVertical();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    isOpen = EditorGUILayout.BeginFoldoutHeaderGroup(isOpen, (i + 1) + ") " + prefab.type.ToString());
+                    {
+                        if (prefab.gameObject != null && prefab.type != GridCellType.Empty)
+                            if (GUILayout.Button("Create", GUILayout.Width(70)))
+                                CrateObject(prefab.type, prefab.gameObject);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    if (isOpen) PrefabSetting(ref prefab);
+                }
+                EditorGUILayout.EndVertical();
+            }
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
 
         private void PrefabSetting(ref GridCell prefab)
         {
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Object type ", GUILayout.Width(100));
-            prefab.type = (GridCellType)EditorGUILayout.EnumPopup(prefab.type);
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Object prefab ", GUILayout.Width(100));
-            prefab.gameObject = (GameObject)EditorGUILayout.ObjectField(prefab.gameObject, typeof(GameObject), false);
-            EditorGUILayout.EndHorizontal();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Object type ", GUILayout.Width(100));
+                    prefab.type = (GridCellType)EditorGUILayout.EnumPopup(prefab.type);
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Object prefab ", GUILayout.Width(100));
+                    prefab.gameObject =
+                        (GameObject)EditorGUILayout.ObjectField(prefab.gameObject, typeof(GameObject), false);
+                }
+                EditorGUILayout.EndHorizontal();
+            }
             EditorGUILayout.EndVertical();
         }
+
+        private void EditingObjectInfo()
+        {
+            if (editingGameObjects == null) return;
+
+            EditorGUILayout.BeginVertical("box");
+            {
+                size = EditorGUILayout.Vector2IntField("Size ", size);
+                if (size != lastSizeValue) UpdateObject();
+
+                var pos = editingGameObjects[0, 0].transform.position;
+                var newPosition = EditorGUILayout.Vector3IntField("Position ",
+                    new Vector3Int((int)pos.x, (int)pos.y, (int)pos.z));
+                editingGameObjects[0, 0].transform.position = newPosition;
+
+                EditorGUILayout.Space();
+                ButtonApply();
+                EditorGUILayout.Space();
+            }
+            EditorGUILayout.EndVertical();
+            lastSizeValue = size;
+        }
+
+        private void ButtonApply()
+        {
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.Space();
+                if (GUILayout.Button("Apply", GUILayout.Width(70))) ApplyObject();
+                EditorGUILayout.Space();
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
+        #endregion
+
+        #region OnClickButtonMethods
 
         private void CrateObject(GridCellType type, GameObject prefab)
         {
@@ -137,7 +199,7 @@ namespace MyTools
 
             foreach (var obj in editingGameObjects)
             {
-                if (obj != editingGameObjects[0,0]) obj.transform.SetParent(editingGameObjects[0,0].transform);
+                if (obj != editingGameObjects[0, 0]) obj.transform.SetParent(editingGameObjects[0, 0].transform);
             }
 
             size.x = editingGameObjects.GetLength(0);
@@ -155,9 +217,9 @@ namespace MyTools
                 var obj = editingGameObjects[i, j];
                 obj.transform.parent = null;
                 var pos = obj.transform.position;
-                map[(int)pos.x, (int)pos.z] = new GridCell(typeEditingGameObject, obj);
+                map[(int)pos.x, (int)pos.z] = new GridCell(typeEditingGameObject, editingGameObjectPrefab);
             }
-            
+
             typeEditingGameObject = GridCellType.Empty;
             editingGameObjectPrefab = null;
             editingGameObjects = null;
@@ -171,5 +233,15 @@ namespace MyTools
                 map[i, j] = new GridCell(GridCellType.Empty, null);
             }
         }
+
+        private void SaveMap()
+        {
+            var data = CreateInstance<Tools.MapGridData>();
+            data.Grid = map;
+            AssetDatabase.CreateAsset(data, saveMapDataPath);
+            var dataAsset = AssetDatabase.LoadAssetAtPath<Tools.MapGridData>(saveMapDataPath);
+            Debug.Log(dataAsset);
+        }
+        #endregion
     }
 }
