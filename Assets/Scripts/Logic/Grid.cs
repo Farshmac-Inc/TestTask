@@ -15,18 +15,19 @@ namespace Game
         private static bool[,] naviGridAvailable;
         private static Vector2Int playerPosition;
         public static Action GridChange;
+        
 
         public static void SetMovableElementPosition(Vector2Int pos, Vector2Int lastPos, GridCellType type)
         {
             MoveElement(lastPos, pos, type);
         }
 
-        private void Start()
+        private void Awake()
         {
-            if (mapGridData != null) SetGrid(mapGridData);
+            if (mapGridData != null) grid = SetGrid(mapGridData);
         }
 
-        private void SetGrid(Tools.MapGridData data)
+        private GridCell[,] SetGrid(Tools.MapGridData data)
         {
             grid = new GridCell[data.Grid.GetLength(0), data.Grid.GetLength(1)];
             grid = data.Grid;
@@ -39,8 +40,11 @@ namespace Game
                     var prefab = cell.gameObject;
                     cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
                 }
-                 
+
+                cell.isAvailableForMove = true;
             }
+
+            return grid;
         }
 
         private static void MoveElement(Vector2Int lastPos, Vector2Int newPos, GridCellType type)
@@ -49,7 +53,11 @@ namespace Game
             ref var finishCell = ref grid[newPos.x, newPos.y];
             finishCell = new GridCell(type, startCell.gameObject);
             startCell = new GridCell(GridCellType.Empty, null);
-            if (type == GridCellType.Player) playerPosition = newPos;
+            if (type == GridCellType.Player)
+            {
+                GridChange?.Invoke();
+                playerPosition = newPos;
+            }
         }
 
         public static bool RemoveElement(Vector2Int cellPos)
@@ -82,7 +90,10 @@ namespace Game
 
         public static Vector2Int[] FindPathToPlayer(Vector2Int start)
         {
+            if (grid == null) return null;
+            if (playerPosition == Vector2Int.zero) return null;
             return PathFinder.PathFinder.FindPath(start, playerPosition, grid);
+            
         }
         
     }

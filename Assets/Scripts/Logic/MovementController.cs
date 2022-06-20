@@ -17,7 +17,7 @@ namespace Game
         {
             newPositionEvent += Grid.SetMovableElementPosition;
             var worldPosition = transform.position;
-            position = new Vector2Int(Mathf.FloorToInt(worldPosition.x), Mathf.FloorToInt(worldPosition.y));
+            position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y));
         }
 
         /// <summary>

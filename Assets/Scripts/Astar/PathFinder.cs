@@ -25,17 +25,22 @@ namespace Game.PathFinder
                 nodesArray, nodes.GetLength(1), mapSize)
                 );
             availableNodes.Add(startNode);
-
+            
             while (availableNodes.Count > 0)
             {
-                var currentNode = availableNodes.OrderBy(node => node.FullPathLength).First();
+                var a = availableNodes.OrderBy(node => node.FullPathLength);
+                var currentNode = a.First();
+                
                 if (currentNode.Position == targetPos)
+                {
                     return GetPathForNode(currentNode);
+                }
+
                 availableNodes.Remove(currentNode);
                 exploredNodes.Add(currentNode);
                 foreach (var neighbour in currentNode.Neighbours)
                 {
-                    if (exploredNodes.Count(node => node.Position == neighbour.Position) > 0) break;
+                    if (exploredNodes.Count(node => node.Position == neighbour.Position) > 0) continue;
                     var openNode = availableNodes.FirstOrDefault(node => node.Position == neighbour.Position);
                     if (openNode == null)
                     {
@@ -48,7 +53,6 @@ namespace Game.PathFinder
                     }
                 }
             }
-
             return null;
         }
 
@@ -81,7 +85,7 @@ namespace Game.PathFinder
             if (x > 0) result.Add(nodes[(x - 1) * width + y]);
             if (x < mapSize.x - 1) result.Add(nodes[(x + 1) * width + y]);
             if (y > 0) result.Add(nodes[x * width + y - 1]);
-            if (y < mapSize.y - 1) result.Add(nodes[x * width + y - 1]);
+            if (y < mapSize.y - 1) result.Add(nodes[x * width + y + 1]);
             return result.ToArray();
         }
 
