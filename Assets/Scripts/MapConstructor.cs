@@ -1,6 +1,8 @@
 using Game;
+using Tools;
 using UnityEngine;
 using UnityEditor;
+using Grid = Game.Grid;
 
 
 namespace MyTools
@@ -8,11 +10,12 @@ namespace MyTools
     public class MapConstructor : EditorWindow
     {
         #region Fields
+
         private static MapConstructor window;
         private static GridCell[] prefabs = new GridCell[10];
         private static bool[] isPrefabSettingOpen = new bool[10];
         private static GridCell[,] map;
-        private static string saveMapDataPath = "Assets/Resource/MapData.asset";
+        private static string saveMapDataPath = "Assets/Prefab/MapData.asset";
 
         private Vector2 prefabListScrollBarValue = Vector2.zero;
         private GameObject[,] editingGameObjects;
@@ -21,6 +24,8 @@ namespace MyTools
         private Vector2Int mapSize = new Vector2Int(30, 20);
         private Vector2Int size = Vector2Int.one;
         private Vector2Int lastSizeValue = Vector2Int.zero;
+        private MapGridData data;
+        private Vector2 globalScrollBarValue = Vector2.zero;
 
         #endregion
 
@@ -37,11 +42,13 @@ namespace MyTools
         {
             EditorGUILayout.BeginVertical();
             {
+                globalScrollBarValue = EditorGUILayout.BeginScrollView(globalScrollBarValue);
                 MapSettingsArea();
                 EditorGUILayout.Space();
                 PrefabList();
                 EditorGUILayout.Space();
                 EditingObjectInfo();
+                EditorGUILayout.EndScrollView();
             }
             EditorGUILayout.EndVertical();
         }
@@ -59,6 +66,7 @@ namespace MyTools
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Save map path: ");
                 saveMapDataPath = EditorGUILayout.TextField(saveMapDataPath);
+                data = EditorGUILayout.ObjectField(data, typeof(MapGridData)) as MapGridData;
 
                 EditorGUILayout.Space();
                 SaveButton();
@@ -77,7 +85,7 @@ namespace MyTools
             }
             EditorGUILayout.EndHorizontal();
         }
-        
+
         private void PrefabList()
         {
             EditorGUILayout.BeginVertical("box");
@@ -186,6 +194,8 @@ namespace MyTools
         {
             var currentPos = editingGameObjects[0, 0].transform.position;
             foreach (var editObject in editingGameObjects) DestroyImmediate(editObject);
+            size.x = Mathf.Clamp(size.x, 0, mapSize.x);
+            size.y = Mathf.Clamp(size.y, 0, mapSize.y);
             editingGameObjects = new GameObject[size.x, size.y];
             for (int i = 0; i < size.x; i++)
             for (int j = 0; j < size.y; j++)
@@ -209,7 +219,7 @@ namespace MyTools
         private void ApplyObject()
         {
             if (map == null) map = new GridCell[mapSize.x, mapSize.y];
-            else ClearMap();
+
 
             for (var i = 0; i < editingGameObjects.GetLength(0); i++)
             for (var j = 0; j < editingGameObjects.GetLength(1); j++)
@@ -225,23 +235,18 @@ namespace MyTools
             editingGameObjects = null;
         }
 
-        private void ClearMap()
-        {
-            for (var i = 0; i < map.GetLength(0); i++)
-            for (var j = 0; j < map.GetLength(1); j++)
-            {
-                map[i, j] = new GridCell(GridCellType.Empty, null);
-            }
-        }
-
         private void SaveMap()
         {
-            var data = CreateInstance<Tools.MapGridData>();
+            if (map == null) return;
             data.Grid = map;
-            AssetDatabase.CreateAsset(data, saveMapDataPath);
-            var dataAsset = AssetDatabase.LoadAssetAtPath<Tools.MapGridData>(saveMapDataPath);
-            Debug.Log(dataAsset);
+            foreach (var obj in map)
+            {
+                DestroyImmediate(obj.gameObject);
+            }
+
+            map = null;
         }
+
         #endregion
     }
 }

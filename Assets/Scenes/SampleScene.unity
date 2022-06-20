@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -777,7 +777,7 @@ MonoBehaviour:
   movementController: {fileID: 1269770097}
   bomber: {fileID: 1269770096}
   playerInput: {fileID: 1269770098}
---- !u!114 &963194230
+--- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -786,9 +786,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f593e5e2cb66854888c40f04c02a6b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 251bbc2033651a74086acfb4f6671d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TESTDATA_DELETE_ME: {fileID: 11400000, guid: e4f2d9024a0f8da4cb002e045d8dc7a4, type: 2}
 --- !u!114 &1269770096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 874317341045775169, guid: eea16ef0f58854448aaa9db9257bc84b, type: 3}

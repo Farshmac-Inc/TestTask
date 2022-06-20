@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game
 {
-    
+    [Serializable]
     public struct GridCell
     {
-        internal GridCellType type;
-        internal GameObject gameObject;
+        [SerializeField] internal GridCellType type;
+        [SerializeField] internal GameObject gameObject;
 
         public GridCell(GridCellType type, GameObject gameObject)
         {
@@ -16,7 +17,7 @@ namespace Game
 
         public override string ToString()
         {
-            return $"{type} | {gameObject.name}";
+            return $"{type} | {gameObject}";
         }
     }
 }

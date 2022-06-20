@@ -17,15 +17,17 @@ namespace Game
 
         private void SetGrid(Tools.MapGridData data)
         {
-            Debug.Log(data.Grid);
             grid = new GridCell[data.Grid.GetLength(0), data.Grid.GetLength(1)];
             grid = data.Grid;
             for (var x = 0; x < grid.GetLength(0); x++)
             for (var z = 0; z < grid.GetLength(1); z++)
             {
                 var cell = grid[x, z];
-                var prefab = cell.gameObject;
-                cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
+                if (cell.type != GridCellType.Empty && cell.gameObject != null)
+                {
+                    var prefab = cell.gameObject;
+                    cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
+                }
             }
         }
     }
