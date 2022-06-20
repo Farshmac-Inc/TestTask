@@ -15,7 +15,7 @@ namespace MyTools
         private static GridCell[] prefabs = new GridCell[10];
         private static bool[] isPrefabSettingOpen = new bool[10];
         private static GridCell[,] map;
-        private static string saveMapDataPath = "Assets/Prefab/MapData.asset";
+        private static string mapSavePath = "Assets/Resource/Test.asset";
 
         private Vector2 prefabListScrollBarValue = Vector2.zero;
         private GameObject[,] editingGameObjects;
@@ -24,7 +24,6 @@ namespace MyTools
         private Vector2Int mapSize = new Vector2Int(30, 20);
         private Vector2Int size = Vector2Int.one;
         private Vector2Int lastSizeValue = Vector2Int.zero;
-        private MapGridData data;
         private Vector2 globalScrollBarValue = Vector2.zero;
 
         #endregion
@@ -65,8 +64,7 @@ namespace MyTools
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Save map path: ");
-                saveMapDataPath = EditorGUILayout.TextField(saveMapDataPath);
-                data = EditorGUILayout.ObjectField(data, typeof(MapGridData)) as MapGridData;
+                mapSavePath = EditorGUILayout.TextField(mapSavePath);
 
                 EditorGUILayout.Space();
                 SaveButton();
@@ -238,7 +236,15 @@ namespace MyTools
         private void SaveMap()
         {
             if (map == null) return;
+            var data = ScriptableObject.CreateInstance<MapGridData>();
             data.Grid = map;
+            //ClearMap();
+            map = null;
+            AssetDatabase.CreateAsset(data, mapSavePath);
+        }
+
+        private void ClearMap()
+        {
             foreach (var obj in map)
             {
                 DestroyImmediate(obj.gameObject);

@@ -953,6 +953,7 @@ MonoBehaviour:
   moveSpeed: 3
   charController: {fileID: 5177265326610768632}
   animation: {fileID: 111863857214503350}
+  type: 3
 --- !u!114 &874317341045775169
 MonoBehaviour:
   m_ObjectHideFlags: 0

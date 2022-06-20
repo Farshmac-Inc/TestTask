@@ -6,20 +6,20 @@ namespace Game
     public class Bomb : MonoBehaviour
     {
         [SerializeField] private float timeBeforeExplosion;
+        private Vector2Int position;
 
         private void Start()
         {
             StartCoroutine(BombTimer());
+            var bombWorldPosition = transform.position;
+            position = new Vector2Int(Mathf.RoundToInt(bombWorldPosition.x), Mathf.RoundToInt(bombWorldPosition.z));
+            transform.position = new Vector3(position.x, 0, position.y);
         }
 
         private IEnumerator BombTimer()
         {
-            var position = transform.position;
-            Vector2 positionCell = new Vector2(Mathf.RoundToInt(position.x),
-                Mathf.RoundToInt(position.z));
             yield return new WaitForSeconds(timeBeforeExplosion);
-            Debug.Log("Bomb explosion in cell: " + positionCell.ToString());
-            ExplosionArea(new Vector2Int((int)transform.position.x, (int)transform.position.z));
+            ExplosionArea(position);
             Destroy(this.gameObject);
         }
 
@@ -34,7 +34,8 @@ namespace Game
             for (int i = 0; i < explosionAreMask.GetLength(0); i++)
                 for (int j = 0; j < explosionAreMask.GetLength(1); j++)
                 {
-                    //if(explosionAreMask[i,j]) Grid.RemoveElement(epicenterPosition - Vector2Int.one);
+                    if(explosionAreMask[i,j]) 
+                        Grid.RemoveElement(epicenterPosition - Vector2Int.one + new Vector2Int(i,j));
                 }
         }
     }

@@ -7,6 +7,8 @@ namespace Game
     {
         Empty,
         WoodWall,
-        StoneWall
+        StoneWall,
+        Player,
+        Enemy
     }
 }
