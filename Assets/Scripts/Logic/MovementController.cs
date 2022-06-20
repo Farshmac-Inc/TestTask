@@ -9,7 +9,7 @@ namespace Game
         [SerializeField] private CharacterController charController;
         [SerializeField] private Animation animation;
         [SerializeField] private GridCellType type;
-        private Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
+        public Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
         private Vector2Int position;
         
 

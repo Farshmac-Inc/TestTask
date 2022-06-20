@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -35,7 +36,8 @@ namespace Game
                 for (int j = 0; j < explosionAreMask.GetLength(1); j++)
                 {
                     if(explosionAreMask[i,j]) 
-                        Grid.RemoveElement(epicenterPosition - Vector2Int.one + new Vector2Int(i,j));
+                        if(Grid.RemoveElement(epicenterPosition - Vector2Int.one + new Vector2Int(i,j))
+                           );
                 }
         }
     }

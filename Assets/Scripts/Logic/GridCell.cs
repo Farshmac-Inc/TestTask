@@ -6,13 +6,15 @@ namespace Game
     [Serializable]
     public struct GridCell
     {
-        [SerializeField] internal GridCellType type;
-        [SerializeField] internal GameObject gameObject;
+        [SerializeField] public GridCellType type;
+        [SerializeField] public GameObject gameObject;
+        [SerializeField] public bool isAvailableForMove;
 
         public GridCell(GridCellType type, GameObject gameObject)
         {
             this.type = type;
             this.gameObject = gameObject;
+            isAvailableForMove = (type != GridCellType.StoneWall && type != GridCellType.WoodWall);
         }
 
         public override string ToString()

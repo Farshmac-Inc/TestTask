@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.PathFinder;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +11,10 @@ namespace Game
     {
         [SerializeField] private Tools.MapGridData mapGridData;
         private static GridCell[,] grid;
-        private static bool[,] naviGrid;
+        private static PathNode[,] naviGrid;
+        private static bool[,] naviGridAvailable;
+        private static Vector2Int playerPosition;
+        public static Action GridChange;
 
         public static void SetMovableElementPosition(Vector2Int pos, Vector2Int lastPos, GridCellType type)
         {
@@ -19,7 +23,7 @@ namespace Game
 
         private void Start()
         {
-            if(mapGridData!= null) SetGrid(mapGridData);
+            if (mapGridData != null) SetGrid(mapGridData);
         }
 
         private void SetGrid(Tools.MapGridData data)
@@ -35,6 +39,7 @@ namespace Game
                     var prefab = cell.gameObject;
                     cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
                 }
+                 
             }
         }
 
@@ -44,7 +49,7 @@ namespace Game
             ref var finishCell = ref grid[newPos.x, newPos.y];
             finishCell = new GridCell(type, startCell.gameObject);
             startCell = new GridCell(GridCellType.Empty, null);
-            
+            if (type == GridCellType.Player) playerPosition = newPos;
         }
 
         public static bool RemoveElement(Vector2Int cellPos)
@@ -56,6 +61,7 @@ namespace Game
                 {
                     Destroy(cell.gameObject);
                     cell = new GridCell(GridCellType.Empty, null);
+                    GridChange?.Invoke();
                     return true;
                 }
                 case GridCellType.StoneWall:
@@ -73,6 +79,11 @@ namespace Game
                 }
             }
         }
+
+        public static Vector2Int[] FindPathToPlayer(Vector2Int start)
+        {
+            return PathFinder.PathFinder.FindPath(start, playerPosition, grid);
+        }
+        
     }
 }
-
