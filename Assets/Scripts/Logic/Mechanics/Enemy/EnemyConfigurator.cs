@@ -17,8 +17,10 @@ namespace Game.Mechanics.Enemy
         private void Start()
         {
             followController = GetComponent<FollowController>();
+            followController.SetMoveDirection += movementController.Move;
             Grid.GridChange += followController.FindPathToPlayer;
             followController.findPathEvent = Grid.FindPathToPlayer;
+            movementController.newPositionEvent += (old, newPos, type) => Debug.Log(newPos);
         }
     }
 }

@@ -31,23 +31,23 @@ namespace Game.Mechanics
             {
                 case UnitState.Idle:
                 {
-                    PlayAnimaton(IdleAnimationName, state);
+                    PlayAnimation(IdleAnimationName, state);
                     break;
                 }
                 case UnitState.Run:
                 {
-                    PlayAnimaton(RunAnimationName, state);
+                    PlayAnimation(RunAnimationName, state);
                     break;
                 }
                 case UnitState.Die:
                 {
-                    PlayAnimaton(DieAnimationName, state);
+                    PlayAnimation(DieAnimationName, state);
                     break;
                 }
             }
         }
 
-        private void PlayAnimaton(string name, UnitState state)
+        private void PlayAnimation(string name, UnitState state)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Game.Mechanics
             }
             catch (Exception e)
             {
-                Debug.LogError($"Specify the correct animation name for the state {state}");
+                //Debug.LogError($"Specify the correct animation name for the state {state}");
                 throw;
             }
         }

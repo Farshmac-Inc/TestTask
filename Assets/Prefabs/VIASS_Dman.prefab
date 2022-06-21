@@ -906,6 +906,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: dd6e6df4cbc9d404487a32f64046edc3, type: 3}
   - {fileID: 7400000, guid: 16a7ff9113ccf714f83e200332b45ee5, type: 3}
+  - {fileID: 7400000, guid: 5c3f63b98162c9342800d2d845a2e7d3, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -954,7 +955,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  charController: {fileID: 5177265326610768632}
   type: 3
 --- !u!114 &874317341045775169
 MonoBehaviour:
@@ -996,8 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RunAnimationName: Run
   IdleAnimationName: Idle
-  DieAnimationName: 
-  animation: {fileID: 111863857214503350}
+  DieAnimationName: Dizzy
 --- !u!114 &2090037181703784682
 MonoBehaviour:
   m_ObjectHideFlags: 0

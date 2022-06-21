@@ -12,7 +12,8 @@ namespace Game.Mechanics.Enemy
         private int nodeNumber = 0;
         private Vector2Int currentPosition;
 
-        public Func<Vector2Int, Vector2Int[]> findPathEvent; 
+        public Func<Vector2Int, Vector2Int[]> findPathEvent;
+        public Action<Vector2> SetMoveDirection;
 
         #endregion
         
@@ -20,7 +21,6 @@ namespace Game.Mechanics.Enemy
         private void Start()
         {
             moveControl = GetComponent<MovementController>();
-            moveControl.newPositionEvent += ChangePosition;
             var position = transform.position;
             currentPosition = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
             FindPathToPlayer();
@@ -31,8 +31,10 @@ namespace Game.Mechanics.Enemy
             if (path == null) FindPathToPlayer();
             else
             {
-                if(nodeNumber < path.Length-1) moveControl.Move(path[nodeNumber+1] - currentPosition);
-                else if(nodeNumber == path.Length-1) moveControl.Move(path[nodeNumber] - currentPosition);
+                if(nodeNumber < path.Length-1) 
+                    SetMoveDirection?.Invoke(path[nodeNumber+1] - currentPosition);
+                else if(nodeNumber == path.Length-1) 
+                    SetMoveDirection?.Invoke(path[nodeNumber] - currentPosition);
             }
             
         }

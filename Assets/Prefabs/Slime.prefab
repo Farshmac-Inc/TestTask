@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  charController: {fileID: 8127527222612398199}
   type: 4
 --- !u!114 &1719791776888509433
 MonoBehaviour:
@@ -158,10 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c25739b24b8c04799a0c1755adfb94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunAnimationName: RunFWD
-  IdleAnimationName: IdleBattle
-  DieAnimationName: Die
-  animation: {fileID: 8672641699247050753}
+  RunAnimationName: 
+  IdleAnimationName: 
+  DieAnimationName: 
 --- !u!114 &86309223661034742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809d6167f8f8280448fb0955be1e8ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToCorpseRemoval: 0
 --- !u!1 &1159745215084782
 GameObject:
   m_ObjectHideFlags: 0

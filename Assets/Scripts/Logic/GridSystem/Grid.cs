@@ -14,7 +14,7 @@ namespace Game.GridSystem
 
         #endregion
 
-        #region Private fields
+        #region Private Fields
 
         private static GridCell[,] grid;
         private static PathNode[,] naviGrid;
@@ -42,9 +42,11 @@ namespace Game.GridSystem
                     cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
                 }
 
+                if (cell.type == GridCellType.Player) playerPosition = new Vector2Int(x, z);
+                if (cell.type == GridCellType.Enemy) Debug.Log($"{cell.type} - {cell.gameObject}");
+
                 cell.isAvailableForMove = cell.type != GridCellType.WoodWall && cell.type != GridCellType.StoneWall;
             }
-
             return grid;
         }
 
@@ -53,7 +55,10 @@ namespace Game.GridSystem
             ref var startCell = ref grid[lastPos.x, lastPos.y];
             ref var finishCell = ref grid[newPos.x, newPos.y];
             finishCell = new GridCell(type, startCell.gameObject);
+            Debug.Log($"1) {startCell.type} - {startCell.gameObject} | {finishCell.type} - {finishCell.gameObject}");
             startCell = new GridCell(GridCellType.Empty, null);
+            Debug.Log($"2) {startCell.type} - {startCell.gameObject} | {finishCell.type} - {finishCell.gameObject}");
+            
             if (type == GridCellType.Player)
             {
                 GridChange?.Invoke();
@@ -81,6 +86,7 @@ namespace Game.GridSystem
         public static bool RemoveElement(Vector2Int cellPos)
         {
             ref var cell = ref grid[cellPos.x, cellPos.y];
+            Debug.Log(cell.type);
             switch (cell.type)
             {
                 case GridCellType.WoodWall:
@@ -96,7 +102,7 @@ namespace Game.GridSystem
                 }
                 case GridCellType.Player:
                 {
-                    cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
+                    PlayerKilled?.Invoke();
                     Debug.Log("Player killed");
                     return true;
                 }

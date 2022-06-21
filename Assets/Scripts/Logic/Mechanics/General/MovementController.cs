@@ -24,7 +24,6 @@ namespace Game.Mechanics
         private void Start()
         {
             charController = GetComponent<CharacterController>();
-            newPositionEvent += Grid.SetMovableElementPosition;
             var worldPosition = transform.position;
             position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y));
         }
@@ -66,5 +65,6 @@ namespace Game.Mechanics
             var worldPosition = transform.position;
             position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
         }
+
     }
 }

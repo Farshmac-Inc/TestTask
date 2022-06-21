@@ -1,5 +1,4 @@
 using UnityEngine;
-using Grid = Game.GridSystem.Grid;
 
 namespace Game.Mechanics.PLayer
 {
@@ -21,6 +20,7 @@ namespace Game.Mechanics.PLayer
             playerInput = GetComponent<PlayerInput>();
             playerInput.MoveEvent += movementController.Move;
             playerInput.DroppingBombEvent += bomber.DropBomb;
+            GridSystem.Grid.PlayerKilled += Killed;
         }
     }
 }

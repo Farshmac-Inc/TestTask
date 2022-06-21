@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Grid = Game.GridSystem.Grid;
-using Object = UnityEngine.Object;
 
 namespace Game.Mechanics
 {
@@ -12,8 +11,8 @@ namespace Game.Mechanics
         #region Fields
 
         private protected MovementController movementController;
-        private protected AnimationManager animationManager;
-        private protected IDamageable damageableComponent;
+        private AnimationManager animationManager;
+        private IDamageable damageableComponent;
         public Action Killed;
 
         #endregion
@@ -26,14 +25,6 @@ namespace Game.Mechanics
             movementController.newPositionEvent += Grid.SetMovableElementPosition;
             movementController.SetState += animationManager.SetState;
             Killed += damageableComponent.GetDamage;
-        }
-    }
-
-    internal class TypeRestrictionAttribute : Attribute
-    {
-        public TypeRestrictionAttribute(Type type)
-        {
-            throw new NotImplementedException();
         }
     }
 }
