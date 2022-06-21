@@ -45,11 +45,13 @@ namespace Game.PathFinder
                     if (openNode == null)
                     {
                         availableNodes.Add(neighbour);
+                        neighbour.PreviousPathNode = currentNode;
+                        neighbour.PathLengthFromStart = currentNode.PathLengthFromStart + 1;
                     }
                     else if (openNode.PathLengthFromStart > neighbour.PathLengthFromStart)
                     {
-                        neighbour.PreviousPathNode = currentNode;
-                        neighbour.PathLengthFromStart = neighbour.PathLengthFromStart;
+                        openNode.PreviousPathNode = currentNode;
+                        openNode.PathLengthFromStart = neighbour.PathLengthFromStart;
                     }
                 }
             }

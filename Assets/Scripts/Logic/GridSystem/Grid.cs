@@ -41,7 +41,7 @@ namespace Game
                     cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
                 }
 
-                cell.isAvailableForMove = true;
+                cell.isAvailableForMove = cell.type != GridCellType.WoodWall && cell.type != GridCellType.StoneWall;
             }
 
             return grid;
