@@ -867,6 +867,7 @@ GameObject:
   - component: {fileID: 1618406652003452456}
   - component: {fileID: 6770234094648071300}
   - component: {fileID: 874317341045775169}
+  - component: {fileID: 8740964158509618382}
   m_Layer: 0
   m_Name: VIASS_Dman
   m_TagString: Untagged
@@ -968,6 +969,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droppingBombCooldown: 1
   bombPrefab: {fileID: 1883854954243688137, guid: 9574f0a157ccfcf4e8542f319664524a, type: 3}
+--- !u!114 &8740964158509618382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893769056011736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e076f006093b043a33335d2ff912fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementController: {fileID: 6770234094648071300}
+  bomber: {fileID: 874317341045775169}
+  playerInput: {fileID: 1618406652003452456}
 --- !u!1 &1894852224704676
 GameObject:
   m_ObjectHideFlags: 0

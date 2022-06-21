@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
+using Game.GridSystem;
+using Grid = Game.GridSystem.Grid;
 
-namespace Game
+namespace Game.Logic
 {
     public class MovementController : MonoBehaviour
     {

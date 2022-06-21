@@ -1,17 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.PathFinder;
-using UnityEditor;
 using UnityEngine;
 
-namespace Game
+namespace Game.GridSystem
 {
     public class Grid : MonoBehaviour
     {
         #region Serialized Field
 
-        [SerializeField] private Tools.MapGridData mapGridData;
+        [SerializeField] private MapGridData mapGridData;
         public static Action GridChange;
 
         #endregion
@@ -30,7 +27,7 @@ namespace Game
             if (mapGridData != null) grid = SetGrid(mapGridData);
         }
 
-        private GridCell[,] SetGrid(Tools.MapGridData data)
+        private GridCell[,] SetGrid(MapGridData data)
         {
             grid = new GridCell[data.Grid.GetLength(0), data.Grid.GetLength(1)];
             grid = data.Grid;

@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game
+namespace Game.Logic
 {
     public class FollowController : MonoBehaviour
     {
@@ -14,6 +12,8 @@ namespace Game
         private int nodeNumber = 0;
         private Vector2Int currentPosition;
 
+        public Func<Vector2Int, Vector2Int[]> findPathEvent; 
+
         #endregion
         
 
@@ -23,7 +23,6 @@ namespace Game
             moveControl.newPositionEvent += ChangePosition;
             var position = transform.position;
             currentPosition = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
-            Grid.GridChange += FindPathToPlayer;
             FindPathToPlayer();
         }
 
@@ -33,13 +32,13 @@ namespace Game
             else if(nodeNumber < path.Length) moveControl.Move(path[nodeNumber+1] - currentPosition);
         }
 
-        private void FindPathToPlayer()
+        public void FindPathToPlayer()
         {
-            path = Grid.FindPathToPlayer(currentPosition);            
+            path = findPathEvent?.Invoke(currentPosition);           
             nodeNumber = 1; 
         }
 
-        private void ChangePosition(Vector2Int last, Vector2Int newPos, GridCellType type)
+        private void ChangePosition(Vector2Int last, Vector2Int newPos, Game.GridSystem.GridCellType type)
         {
             currentPosition = newPos;
             if (currentPosition == path[nodeNumber]) nodeNumber++;

@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6754800050313027488}
   - component: {fileID: 1719791776888509433}
   - component: {fileID: 8672641699247050753}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 1090219386143568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4491811072490378}
   - {fileID: 4835855552950442}
@@ -79,13 +79,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 0.6666667
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.38, z: 0}
 --- !u!114 &6754800050313027488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eddd1c3b16e2544f88aae7406f1b0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 3
   charController: {fileID: 8127527222612398199}
   animation: {fileID: 8672641699247050753}
   type: 4
@@ -123,12 +123,10 @@ Animation:
   m_GameObject: {fileID: 1090219386143568}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1028ccecc4e9719459a559df107fdf88, type: 2}
+  m_Animation: {fileID: 7400000, guid: d87c96885671232438c5b043fc3cc97f, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 1028ccecc4e9719459a559df107fdf88, type: 2}
-  - {fileID: 7400000, guid: b91625cf203de6f4cb43529fa1b2fd8d, type: 2}
-  - {fileID: 7400000, guid: 79b5ea2fc7a0f5a47b938f231987587e, type: 2}
-  - {fileID: 7400000, guid: f76b9b823f2fc9a469d0c2c780514380, type: 3}
+  - {fileID: 7400000, guid: d57bb9f35b232f546851ae283a6a4310, type: 3}
+  - {fileID: 7400000, guid: dd6e6df4cbc9d404487a32f64046edc3, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

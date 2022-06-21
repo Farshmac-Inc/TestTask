@@ -1,8 +1,9 @@
 using UnityEngine;
+using Grid = Game.GridSystem.Grid;
 
-namespace Game
+namespace Game.Logic
 {
-    public class Builder : MonoBehaviour
+    public class PlayerConfigurator : UnitConfigurator
     {
         #region Fields
 
@@ -11,10 +12,10 @@ namespace Game
         [SerializeField] private PlayerInput playerInput;
 
         #endregion
-        
 
         private void Start()
         {
+            movementController.newPositionEvent += Grid.SetMovableElementPosition;
             playerInput.MoveEvent += movementController.Move;
             playerInput.DroppingBombEvent += bomber.DropBomb;
         }

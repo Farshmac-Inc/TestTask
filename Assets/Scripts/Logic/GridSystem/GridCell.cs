@@ -1,7 +1,8 @@
 ﻿using System;
+using Game.GridSystem;
 using UnityEngine;
 
-namespace Game
+namespace Game.GridSystem
 {
     [Serializable]
     public struct GridCell

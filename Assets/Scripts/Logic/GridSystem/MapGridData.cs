@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
-using Game;
+﻿using UnityEngine;
 
-namespace Tools
+namespace Game.GridSystem
 {
     public class MapGridData : ScriptableObject
     {

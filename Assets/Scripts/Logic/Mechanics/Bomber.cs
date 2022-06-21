@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game
+namespace Game.Logic
 {
     public class Bomber : MonoBehaviour
     {

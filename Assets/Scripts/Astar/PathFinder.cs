@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Game.GridSystem;
 
 namespace Game.PathFinder
 {

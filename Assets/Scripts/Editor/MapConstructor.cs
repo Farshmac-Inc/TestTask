@@ -1,8 +1,6 @@
-using Game;
-using Tools;
 using UnityEngine;
 using UnityEditor;
-using Grid = Game.Grid;
+using Game.GridSystem;
 
 
 namespace MyTools
