@@ -6,24 +6,30 @@ namespace Game.PathFinder
 {
     public static class PathFinder
     {
+        /// <summary>
+        /// Implementation of algorithm A*.
+        /// </summary>
+        /// <param name="startPos">The grid cell from which the path is constructed.</param>
+        /// <param name="targetPos">The grid cell to which the path is constructed.</param>
+        /// <param name="cells">The matrix of grid cells on which you want to search for a path.</param>
+        /// <returns>An array of grid cells ordered in a straight line that
+        /// must be crossed to get from the start to the end point.</returns>
         public static Vector2Int[] FindPath(Vector2Int startPos, Vector2Int targetPos,
-            GridCell[,] nodes)
+            GridCell[,] cells)
         {
-            var mapSize = new Vector2Int(nodes.GetLength(0), nodes.GetLength(1));
-            var nodesArray = MatrixInArrayPathNodes(nodes, targetPos, mapSize);
+            var mapSize = new Vector2Int(cells.GetLength(0), cells.GetLength(1));
+            var nodes = MatrixInArrayPathNodes(cells, targetPos, mapSize);
             var availableNodes = new List<PathNode>();
             var exploredNodes = new List<PathNode>();
             
-            foreach (var node in nodesArray)
+            foreach (var node in nodes)
                 if (!node.IsAvalaible)
                     exploredNodes.Add(node);
 
             PathNode startNode = new PathNode(startPos, 0, null,
                 CalculateDistance(startPos, targetPos), true);
-            startNode.SetNeighbors(
-                GetNeighbors(startPos.x * nodes.GetLength(1) + startPos.y,
-                nodesArray, nodes.GetLength(1), mapSize)
-                );
+            startNode.Neighbours = GetNeighbors(startPos.x * cells.GetLength(1) + startPos.y,
+                nodes, cells.GetLength(1), mapSize);
             availableNodes.Add(startNode);
             
             while (availableNodes.Count > 0)
@@ -58,7 +64,6 @@ namespace Game.PathFinder
             return null;
         }
 
-
         private static PathNode[] MatrixInArrayPathNodes(GridCell[,] matrix, Vector2Int target, Vector2Int mapSize)
         {
             int width = matrix.GetLength(1);
@@ -73,12 +78,11 @@ namespace Game.PathFinder
 
             for (var i = 0; i < array.Length; i++)
             {
-                array[i].SetNeighbors(GetNeighbors(i, array, width, mapSize));
+                array[i].Neighbours = GetNeighbors(i, array, width, mapSize);
             }
 
             return array;
         }
-
 
         private static PathNode[] GetNeighbors(int i, PathNode[] nodes, int width, Vector2Int mapSize)
         {

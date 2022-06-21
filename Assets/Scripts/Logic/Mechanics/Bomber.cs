@@ -5,12 +5,18 @@ namespace Game
 {
     public class Bomber : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private float droppingBombCooldown;
         [SerializeField] private GameObject bombPrefab;
         private bool isBombReady = true;
 
+        #endregion
+        
         /// <summary>
-        /// Dropping the bomb if possible
+        /// A method that handles an event called by the player's control,
+        /// which checks the possibility of dropping a bomb.
+        /// If there is such an opportunity, resets it.
         /// </summary>
         public void DropBomb()
         {

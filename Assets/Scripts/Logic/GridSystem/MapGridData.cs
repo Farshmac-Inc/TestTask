@@ -6,8 +6,17 @@ namespace Tools
 {
     public class MapGridData : ScriptableObject
     {
+        #region Fields
+
         [SerializeField] private GridCell[] grid;
-        [SerializeField] private int width = 0;
+        [SerializeField] private int width;
+
+        #endregion
+        
+        /// <summary>
+        /// A property that transforms a matrix array of cells into a single one at the input
+        /// and a single one into a matrix one at the output.
+        /// </summary>
         public GridCell[,] Grid
         {
             get

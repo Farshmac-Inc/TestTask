@@ -5,13 +5,17 @@ namespace Game
 {
     public class MovementController : MonoBehaviour
     {
+        #region Fields & Events
+
         [SerializeField] private float moveSpeed;
         [SerializeField] private CharacterController charController;
         [SerializeField] private Animation animation;
         [SerializeField] private GridCellType type;
         public Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
-        private Vector2Int position;
         
+        private Vector2Int position;
+
+        #endregion
 
         private void Start()
         {

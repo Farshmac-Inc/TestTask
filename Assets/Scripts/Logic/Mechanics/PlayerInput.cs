@@ -6,6 +6,8 @@ namespace Game
     public class PlayerInput : MonoBehaviour
     {
         [SerializeField] private KeyCode DroppingBombButton = KeyCode.Space;
+        
+        
         /// <summary>
         /// The event sets the movement vector for the player.
         /// </summary>

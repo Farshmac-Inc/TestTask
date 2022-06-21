@@ -9,18 +9,21 @@ namespace Game
 {
     public class Grid : MonoBehaviour
     {
+        #region Serialized Field
+
         [SerializeField] private Tools.MapGridData mapGridData;
+        public static Action GridChange;
+
+        #endregion
+
+        #region Private fields
+
         private static GridCell[,] grid;
         private static PathNode[,] naviGrid;
         private static bool[,] naviGridAvailable;
         private static Vector2Int playerPosition;
-        public static Action GridChange;
-        
 
-        public static void SetMovableElementPosition(Vector2Int pos, Vector2Int lastPos, GridCellType type)
-        {
-            MoveElement(lastPos, pos, type);
-        }
+        #endregion
 
         private void Awake()
         {
@@ -60,6 +63,23 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// A method that handles an event triggered by one of the movable game elements (Player, enemies).
+        /// </summary>
+        /// <param name="pos">The new position of the object in the grid.</param>
+        /// <param name="lastPos">The old position of the object in the grid.</param>
+        /// <param name="type">The type of the object being moved.</param>
+        public static void SetMovableElementPosition(Vector2Int pos, Vector2Int lastPos, GridCellType type)
+        {
+            MoveElement(lastPos, pos, type);
+        }
+        
+        /// <summary>
+        /// A method that checks the ability to remove an object from a cell.
+        /// If there is such a possibility, it deletes it.
+        /// </summary>
+        /// <param name="cellPos">The grid cell that the method checks.</param>
+        /// <returns>The ability to remove an object from a cell.</returns>
         public static bool RemoveElement(Vector2Int cellPos)
         {
             ref var cell = ref grid[cellPos.x, cellPos.y];
@@ -81,6 +101,11 @@ namespace Game
                     Debug.Log("Player killed");
                     return true;
                 }
+                case GridCellType.Enemy:
+                {
+                    Debug.Log("Enemy killed");
+                    return true;
+                }
                 default:
                 {
                     return false;
@@ -88,13 +113,16 @@ namespace Game
             }
         }
 
-        public static Vector2Int[] FindPathToPlayer(Vector2Int start)
+        /// <summary>
+        /// A method that handles an event caused by enemies when a player moves across the grid, or the grid itself changes.
+        /// </summary>
+        /// <param name="enemyPos">The grid cell in which the enemy is currently located.</param>
+        /// <returns>A straight-ordered array of grid cells that must be traversed to get to the player.</returns>
+        public static Vector2Int[] FindPathToPlayer(Vector2Int enemyPos)
         {
             if (grid == null) return null;
             if (playerPosition == Vector2Int.zero) return null;
-            return PathFinder.PathFinder.FindPath(start, playerPosition, grid);
-            
+            return PathFinder.PathFinder.FindPath(enemyPos, playerPosition, grid);
         }
-        
     }
 }

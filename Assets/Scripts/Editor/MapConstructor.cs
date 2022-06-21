@@ -238,7 +238,6 @@ namespace MyTools
             if (map == null) return;
             var data = ScriptableObject.CreateInstance<MapGridData>();
             data.Grid = map;
-            //ClearMap();
             map = null;
             AssetDatabase.CreateAsset(data, mapSavePath);
         }

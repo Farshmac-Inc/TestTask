@@ -7,10 +7,15 @@ namespace Game
 {
     public class FollowController : MonoBehaviour
     {
+        #region Fields
+
         private MovementController moveControl;
         private Vector2Int[] path;
         private int nodeNumber = 0;
         private Vector2Int currentPosition;
+
+        #endregion
+        
 
         private void Start()
         {
@@ -22,37 +27,24 @@ namespace Game
             FindPathToPlayer();
         }
 
+        private void Update()
+        {
+            if (path == null) FindPathToPlayer();
+            else if(nodeNumber < path.Length) moveControl.Move(path[nodeNumber+1] - currentPosition);
+        }
+
+        private void FindPathToPlayer()
+        {
+            path = Grid.FindPathToPlayer(currentPosition);            
+            nodeNumber = 1; 
+        }
+
         private void ChangePosition(Vector2Int last, Vector2Int newPos, GridCellType type)
         {
             currentPosition = newPos;
             if (currentPosition == path[nodeNumber]) nodeNumber++;
         }
-
-        private void Update()
-        {
-            if (path == null) FindPathToPlayer();
-            else
-            {
-                Debug.Log($"curPos: {currentPosition} | curPoint: {path[nodeNumber]} | targetPoint: {path[nodeNumber+1]} | {currentPosition == path[nodeNumber]} ");
-                if(nodeNumber < path.Length) moveControl.Move(path[nodeNumber+1] - currentPosition);
-            }
-        }
-
-        public void FindPathToPlayer()
-        {
-            path = Grid.FindPathToPlayer(currentPosition);            
-            nodeNumber = 1;
-            
-            
-            
-            if(path == null) return;
-            string PATHSTR = null;
-            foreach(var node in path) PATHSTR += $"{node} | ";
-            Debug.LogError(PATHSTR);
-            
-            
-            
-        }
+        
         private void OnDrawGizmos()
         {
             if (path != null)

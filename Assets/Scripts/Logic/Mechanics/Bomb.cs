@@ -6,8 +6,13 @@ namespace Game
 {
     public class Bomb : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private float timeBeforeExplosion;
         private Vector2Int position;
+
+        #endregion
+        
 
         private void Start()
         {
