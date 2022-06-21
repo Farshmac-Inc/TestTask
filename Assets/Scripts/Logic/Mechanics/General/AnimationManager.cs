@@ -1,17 +1,30 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Mechanics
 {
+    [RequireComponent(typeof(Animation))]
     public class AnimationManager : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private string RunAnimationName;
         [SerializeField] private string IdleAnimationName;
         [SerializeField] private string DieAnimationName;
-        [SerializeField] private Animation animation;
 
+        private Animation animation;
+
+        #endregion
+
+        private void Start()
+        {
+            animation = GetComponent<Animation>();
+        }
+
+        /// <summary>
+        /// Sets the animation according to the transmitted state.
+        /// </summary>
+        /// <param name="state">The state in which the unit is located.</param>
         public void SetState(UnitState state)
         {
             switch (state)
@@ -19,7 +32,6 @@ namespace Game.Mechanics
                 case UnitState.Idle:
                 {
                     PlayAnimaton(IdleAnimationName, state);
-                    
                     break;
                 }
                 case UnitState.Run:

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Mechanics.PLayer
 {
     public class PlayerInput : MonoBehaviour
     {

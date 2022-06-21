@@ -5,23 +5,25 @@ using Grid = Game.GridSystem.Grid;
 
 namespace Game.Mechanics
 {
+    [RequireComponent(typeof(CharacterController))]
     public class MovementController : MonoBehaviour
     {
         #region Fields & Events
 
         [SerializeField] private float moveSpeed;
-        [SerializeField] private CharacterController charController;
         [SerializeField] private GridCellType type;
         
         public Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
         public Action<UnitState> SetState;
-
+        
+        private CharacterController charController;
         private Vector2Int position;
 
         #endregion
 
         private void Start()
         {
+            charController = GetComponent<CharacterController>();
             newPositionEvent += Grid.SetMovableElementPosition;
             var worldPosition = transform.position;
             position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y));

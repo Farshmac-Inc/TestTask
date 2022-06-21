@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 8672641699247050753}
   - component: {fileID: 1609821342337008845}
   - component: {fileID: 8808688849406248381}
+  - component: {fileID: 86309223661034742}
   m_Layer: 12
   m_Name: Slime
   m_TagString: Untagged
@@ -145,9 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4704dae7cb96144b6af370e30da47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementController: {fileID: 6754800050313027488}
-  animationManager: {fileID: 8808688849406248381}
-  followController: {fileID: 1719791776888509433}
 --- !u!114 &8808688849406248381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +162,18 @@ MonoBehaviour:
   IdleAnimationName: IdleBattle
   DieAnimationName: Die
   animation: {fileID: 8672641699247050753}
+--- !u!114 &86309223661034742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090219386143568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809d6167f8f8280448fb0955be1e8ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1159745215084782
 GameObject:
   m_ObjectHideFlags: 0

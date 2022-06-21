@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Mechanics.PLayer
 {
     public class Bomber : MonoBehaviour
     {
