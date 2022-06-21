@@ -10,6 +10,7 @@ namespace Game.GridSystem
 
         [SerializeField] private MapGridData mapGridData;
         public static Action GridChange;
+        public static Action PlayerKilled;
 
         #endregion
 
@@ -95,11 +96,13 @@ namespace Game.GridSystem
                 }
                 case GridCellType.Player:
                 {
+                    cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
                     Debug.Log("Player killed");
                     return true;
                 }
                 case GridCellType.Enemy:
                 {
+                    cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
                     Debug.Log("Enemy killed");
                     return true;
                 }

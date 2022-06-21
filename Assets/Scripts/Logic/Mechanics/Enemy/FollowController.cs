@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Logic
+namespace Game.Mechanics
 {
     public class FollowController : MonoBehaviour
     {
@@ -29,7 +29,12 @@ namespace Game.Logic
         private void Update()
         {
             if (path == null) FindPathToPlayer();
-            else if(nodeNumber < path.Length) moveControl.Move(path[nodeNumber+1] - currentPosition);
+            else
+            {
+                if(nodeNumber < path.Length-1) moveControl.Move(path[nodeNumber+1] - currentPosition);
+                else if(nodeNumber == path.Length-1) moveControl.Move(path[nodeNumber] - currentPosition);
+            }
+            
         }
 
         public void FindPathToPlayer()

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game
+namespace Game.Mechanics
 {
     public class PlayerInput : MonoBehaviour
     {

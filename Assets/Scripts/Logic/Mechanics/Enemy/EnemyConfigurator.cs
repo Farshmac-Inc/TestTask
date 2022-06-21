@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 using Grid = Game.GridSystem.Grid;
 
-namespace Game.Logic
+namespace Game.Mechanics
 {
     public class EnemyConfigurator : UnitConfigurator
     {
@@ -13,7 +14,6 @@ namespace Game.Logic
 
         private void Start()
         {
-            movementController.newPositionEvent += Grid.SetMovableElementPosition;
             Grid.GridChange += followController.FindPathToPlayer;
             followController.findPathEvent = Grid.FindPathToPlayer;
             

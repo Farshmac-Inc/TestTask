@@ -868,6 +868,7 @@ GameObject:
   - component: {fileID: 6770234094648071300}
   - component: {fileID: 874317341045775169}
   - component: {fileID: 8740964158509618382}
+  - component: {fileID: 3413957212425971192}
   m_Layer: 0
   m_Name: VIASS_Dman
   m_TagString: Untagged
@@ -953,7 +954,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   charController: {fileID: 5177265326610768632}
-  animation: {fileID: 111863857214503350}
   type: 3
 --- !u!114 &874317341045775169
 MonoBehaviour:
@@ -978,12 +978,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893769056011736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5e076f006093b043a33335d2ff912fd, type: 3}
+  m_Script: {fileID: 11500000, guid: fe412d0269fe7e24daa1af32cba56ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   movementController: {fileID: 6770234094648071300}
+  animationManager: {fileID: 3413957212425971192}
   bomber: {fileID: 874317341045775169}
   playerInput: {fileID: 1618406652003452456}
+--- !u!114 &3413957212425971192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893769056011736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c25739b24b8c04799a0c1755adfb94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunAnimationName: Run
+  IdleAnimationName: Idle
+  DieAnimationName: 
+  animation: {fileID: 111863857214503350}
 --- !u!1 &1894852224704676
 GameObject:
   m_ObjectHideFlags: 0

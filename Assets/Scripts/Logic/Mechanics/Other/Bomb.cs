@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game.Logic
+namespace Game.Mechanics
 {
     public class Bomb : MonoBehaviour
     {

@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 6754800050313027488}
   - component: {fileID: 1719791776888509433}
   - component: {fileID: 8672641699247050753}
+  - component: {fileID: 1609821342337008845}
+  - component: {fileID: 8808688849406248381}
   m_Layer: 12
   m_Name: Slime
   m_TagString: Untagged
@@ -98,9 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eddd1c3b16e2544f88aae7406f1b0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 2
   charController: {fileID: 8127527222612398199}
-  animation: {fileID: 8672641699247050753}
   type: 4
 --- !u!114 &1719791776888509433
 MonoBehaviour:
@@ -123,14 +124,46 @@ Animation:
   m_GameObject: {fileID: 1090219386143568}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d87c96885671232438c5b043fc3cc97f, type: 2}
+  m_Animation: {fileID: 7400000, guid: 1b444b23a8f0b8644a39df27094135e2, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: d57bb9f35b232f546851ae283a6a4310, type: 3}
-  - {fileID: 7400000, guid: dd6e6df4cbc9d404487a32f64046edc3, type: 3}
+  - {fileID: 7400000, guid: 1b444b23a8f0b8644a39df27094135e2, type: 3}
+  - {fileID: 7400000, guid: 2bfd6fdaf6b23874ca93fca2e578b931, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &1609821342337008845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090219386143568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4704dae7cb96144b6af370e30da47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementController: {fileID: 6754800050313027488}
+  animationManager: {fileID: 8808688849406248381}
+  followController: {fileID: 1719791776888509433}
+--- !u!114 &8808688849406248381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090219386143568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c25739b24b8c04799a0c1755adfb94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunAnimationName: RunFWD
+  IdleAnimationName: IdleBattle
+  DieAnimationName: Die
+  animation: {fileID: 8672641699247050753}
 --- !u!1 &1159745215084782
 GameObject:
   m_ObjectHideFlags: 0

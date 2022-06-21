@@ -3,7 +3,7 @@ using UnityEngine;
 using Game.GridSystem;
 using Grid = Game.GridSystem.Grid;
 
-namespace Game.Logic
+namespace Game.Mechanics
 {
     public class MovementController : MonoBehaviour
     {
@@ -11,10 +11,11 @@ namespace Game.Logic
 
         [SerializeField] private float moveSpeed;
         [SerializeField] private CharacterController charController;
-        [SerializeField] private Animation animation;
         [SerializeField] private GridCellType type;
-        public Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
         
+        public Action<Vector2Int, Vector2Int, GridCellType> newPositionEvent;
+        public Action<UnitState> SetState;
+
         private Vector2Int position;
 
         #endregion
@@ -35,11 +36,10 @@ namespace Game.Logic
             var lastPosition = position;
             if (moveVector == Vector2.zero)
             {
-                animation.Play("Idle");
+                SetState?.Invoke(UnitState.Idle);
                 return;
             }
-
-            animation.Play("Run");
+            SetState?.Invoke(UnitState.Run);
             Rotate(moveVector);
             moveVector *= moveSpeed;
             var deltaPosition = new Vector3(moveVector.x, 0, moveVector.y);
