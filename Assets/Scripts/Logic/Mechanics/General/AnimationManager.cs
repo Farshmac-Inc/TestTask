@@ -48,7 +48,6 @@ namespace Game.Mechanics
                 {
                     animator.SetTrigger(Attack);
                     break;
-                    ;
                 }
             }
         }

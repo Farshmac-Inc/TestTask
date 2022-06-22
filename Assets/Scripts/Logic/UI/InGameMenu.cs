@@ -15,6 +15,7 @@ namespace Game.UI
         [SerializeField] private Slider soundVolume;
         [SerializeField] private Slider musicVolume;
         [SerializeField] private Button restartButton;
+        [SerializeField] private Button quitGameButton;
 
         private static bool isMenuOpen;
         private static InGameMenu instance;
@@ -27,6 +28,7 @@ namespace Game.UI
             soundVolume.onValueChanged.AddListener(ChangeSoundVolume);
             musicVolume.onValueChanged.AddListener(ChangeMusicVolume);
             restartButton.onClick.AddListener(OnClickButtonRestart);
+            quitGameButton.onClick.AddListener(OnClickButtonQuitGame);
             
         }
 
@@ -35,6 +37,7 @@ namespace Game.UI
             soundVolume.onValueChanged.RemoveListener(ChangeSoundVolume);
             musicVolume.onValueChanged.RemoveListener(ChangeMusicVolume);
             restartButton.onClick.RemoveListener(OnClickButtonRestart);
+            quitGameButton.onClick.RemoveListener(OnClickButtonQuitGame);
         }
 
         private void ChangeSoundVolume(float value)
@@ -50,6 +53,11 @@ namespace Game.UI
         private void OnClickButtonRestart()
         {
             GameManager.RestartLevel();
+        }
+        
+        private void OnClickButtonQuitGame()
+        {
+            Application.Quit();
         }
 
         /// <summary>
