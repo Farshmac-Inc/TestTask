@@ -56,7 +56,7 @@ namespace Game.UI
         /// The method that enables or disables the menu.
         /// </summary>
         /// <returns>Whether the menu is currently open or not.</returns>
-        public bool OnClickInGameMenuButton()
+        public static bool OnClickInGameMenuButton()
         {
             if(isMenuOpen) instance.MenuClose();
             else instance.MenuOpen();

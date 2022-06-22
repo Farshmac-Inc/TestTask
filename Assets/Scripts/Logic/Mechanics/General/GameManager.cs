@@ -1,6 +1,7 @@
 using System;
 using Game.GridSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Grid = Game.GridSystem.Grid;
 
 namespace Game
@@ -11,7 +12,6 @@ namespace Game
 
         [SerializeField] private MapGridData[] levelList;
         [SerializeField] private Grid gridManager;
-        [SerializeField] private UI.InGameMenu managerUI;
         private static int lastCompletedLevel = 0;
         private static int currentLevel = 0;
         private static GameManager instance;
@@ -31,7 +31,7 @@ namespace Game
         /// </summary>
         public static void PauseGameButton()
         {
-            if (instance.managerUI.OnClickInGameMenuButton()) Time.timeScale = 0;
+            if (UI.InGameMenu.OnClickInGameMenuButton()) Time.timeScale = 0;
             else Time.timeScale = 1;
         }
 
@@ -49,6 +49,7 @@ namespace Game
         /// <param name="number">The ordinal number of the level.</param>
         public static void UploadLevel(int number)
         {
+            SceneManager.LoadScene(number);
             instance.gridManager.UploadLevel(instance.levelList[number]);
             Time.timeScale = 1;
         }

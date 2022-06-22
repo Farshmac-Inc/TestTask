@@ -130,11 +130,13 @@ namespace Game.GridSystem
                 case GridCellType.Player:
                 {
                     PlayerKilled?.Invoke();
+                    cell = new GridCell(GridCellType.Empty, null);
                     return true;
                 }
                 case GridCellType.Enemy:
                 {
                     cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
+                    cell = new GridCell(GridCellType.Empty, null);
                     return true;
                 }
                 default:

@@ -321,9 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237913560}
   - component: {fileID: 237913559}
-  - component: {fileID: 237913558}
   - component: {fileID: 237913561}
-  - component: {fileID: 237913562}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -331,22 +329,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &237913558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237913557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baa2f3a91dcfbc4458e0827709aa1e3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 2075089905}
-  soundVolume: {fileID: 1964205640}
-  musicVolume: {fileID: 1360124512}
-  restartButton: {fileID: 391664400}
 --- !u!114 &237913559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,9 +341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1eaebccc909c8d47be407141439f046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelList: []
+  levelList:
+  - {fileID: 11400000, guid: b5f7295529853b24dbd46815d02fb95e, type: 2}
   gridManager: {fileID: 2081380377}
-  managerUI: {fileID: 237913558}
 --- !u!4 &237913560
 Transform:
   m_ObjectHideFlags: 0
@@ -388,13 +370,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 91b7aa26a98c01d4ea211b6108b8e6cc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 100
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -472,22 +454,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &237913562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237913557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4150813f5f2f8f4783dff670f327da7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelEndCanvas: {fileID: 1373032696}
-  resultText: {fileID: 272985580}
-  hintText: {fileID: 1185999322}
-  restartButton: {fileID: 1054390918}
 --- !u!1 &272985578
 GameObject:
   m_ObjectHideFlags: 0
@@ -3496,6 +3462,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2081380378}
   - component: {fileID: 2081380377}
+  - component: {fileID: 2081380380}
+  - component: {fileID: 2081380379}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -3530,6 +3498,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2081380379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081380376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa2f3a91dcfbc4458e0827709aa1e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 2075089905}
+  soundVolume: {fileID: 1964205640}
+  musicVolume: {fileID: 1360124512}
+  restartButton: {fileID: 391664400}
+--- !u!114 &2081380380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081380376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4150813f5f2f8f4783dff670f327da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelEndCanvas: {fileID: 1373032696}
+  resultText: {fileID: 272985580}
+  hintText: {fileID: 1185999322}
+  restartButton: {fileID: 1054390918}
 --- !u!1 &2104610542
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,15 +17,7 @@ namespace Game.Mechanics.PLayer
 
         #endregion
 
-        private void OnDestroy()
-        {
-            playerInput.PauseGameEvent -= GameManager.PauseGameButton;
-            playerInput.DroppingBombEvent -= bomber.DropBomb;
-            GridSystem.Grid.PlayerKilled -= Killed;
-            
-            playerInput.MoveEvent -= MoveEventAction;
-            ((PlayerDamageable)damageableComponent).playerKilled -= PlayerKilledAction;
-        }
+        
 
         private void Start()
         {
@@ -37,24 +29,22 @@ namespace Game.Mechanics.PLayer
             playerInput.DroppingBombEvent += bomber.DropBomb;
             GridSystem.Grid.PlayerKilled += Killed;
 
-            playerInput.MoveEvent += MoveEventAction;
+            playerInput.MoveEvent += movementController.Move;
+            movementController.SetState += ((PlayerAudioManager)audioManager).SetState;
             ((PlayerDamageable)damageableComponent).playerKilled += PlayerKilledAction;
 
             playerInput.SetPlayerInputState(true);
         }
-
-        private void MoveEventAction(Vector2 direction)
+        
+        private void OnDestroy()
         {
-            if (direction != Vector2.zero)
-            {
-                movementController.Move(direction);
-                    
-                ((PlayerAudioManager)audioManager).Step(true);
-            }
-            else
-            {
-                ((PlayerAudioManager)audioManager).Step(false);
-            } 
+            playerInput.PauseGameEvent -= GameManager.PauseGameButton;
+            playerInput.DroppingBombEvent -= bomber.DropBomb;
+            GridSystem.Grid.PlayerKilled -= Killed;
+            
+            playerInput.MoveEvent -= movementController.Move;
+            movementController.SetState -= ((PlayerAudioManager)audioManager).SetState;
+            ((PlayerDamageable)damageableComponent).playerKilled -= PlayerKilledAction;
         }
 
         private void PlayerKilledAction()

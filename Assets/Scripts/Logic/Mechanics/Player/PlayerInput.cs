@@ -32,9 +32,8 @@ namespace Game.Mechanics.PLayer
             if (!isPlayerInputActive) return;
             if (Input.GetKeyDown(DroppingBombButton)) DroppingBombEvent?.Invoke();
             if (Input.GetKeyDown(PauseGameButton)) PauseGameEvent?.Invoke();
-            MoveEvent?.Invoke(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized);
+            MoveEvent?.Invoke(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
         }
-
         public void SetPlayerInputState(bool state) => isPlayerInputActive = state;
     }
 }

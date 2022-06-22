@@ -26,7 +26,8 @@ namespace Game.Mechanics.Enemy
             Grid.GridChange += followController.FindPathToPlayer;
             followController.findPathEvent += Grid.FindPathToPlayer;
             movementController.newPositionEvent += followController.ChangePosition;
-            followController.SetMoveDirection += SetMoveDirectionAction;
+            followController.SetMoveDirection += movementController.Move;
+            movementController.SetState += ((EnemyAudioManager)audioManager).SetState;
             ((EnemyDamageable)damageableComponent).EnemyKilled += EnemyKilledAction;
         }
         private void OnDestroy()
@@ -34,24 +35,16 @@ namespace Game.Mechanics.Enemy
             Grid.GridChange -= followController.FindPathToPlayer;
             followController.findPathEvent -= Grid.FindPathToPlayer;
             movementController.newPositionEvent -= followController.ChangePosition;
-            followController.SetMoveDirection -= SetMoveDirectionAction;
+            followController.SetMoveDirection -= movementController.Move;
+            movementController.SetState -= ((EnemyAudioManager)audioManager).SetState;
             ((EnemyDamageable)damageableComponent).EnemyKilled -= EnemyKilledAction;
-        }
-
-        private void SetMoveDirectionAction(Vector2 direction)
-        {
-            if (direction != Vector2.zero)
-            {
-                movementController.Move(direction);
-                ((EnemyAudioManager)audioManager).Step(true);
-            }
-            else ((EnemyAudioManager)audioManager).Step(false);
         }
 
         private void EnemyKilledAction()
         {
             ((EnemyAudioManager)audioManager).Die();
             animationManager.SetState(UnitState.Die);
+            ((EnemyAudioManager)audioManager).SetState(UnitState.Die);
             followController.BlockFollow();
         }
 

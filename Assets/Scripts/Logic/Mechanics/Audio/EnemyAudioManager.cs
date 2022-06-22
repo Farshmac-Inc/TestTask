@@ -10,16 +10,32 @@ namespace Game.Audio
         [SerializeField] private AudioClip attackSound;
         [SerializeField] private AudioClip dieSound;
 
+        private Mechanics.UnitState state;
+
         private void Start()
         {
             source.clip = stepSound[Random.Range(0, stepSound.Length - 1)];
         }
 
-        internal void Step(bool isMove)
+        private void Update()
         {
-            if(isMove) if(!source.isPlaying) source.Play();
-            else source.Pause();
+            switch (state)
+            {
+                case Mechanics.UnitState.Run:
+                {
+                    if(!source.isPlaying) source.Play();
+                    break;
+                }
+                default:
+                {
+                    source.Pause();
+                    break;
+                    ;
+                }
+            }
         }
+
+        internal void SetState(Mechanics.UnitState state) => this.state = state;
 
         internal void Die()
         {

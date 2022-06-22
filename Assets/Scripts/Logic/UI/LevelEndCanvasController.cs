@@ -15,7 +15,6 @@ namespace Game.UI
         [SerializeField] private Text resultText;
         [SerializeField] private Text hintText;
         [SerializeField] private Button restartButton;
-
         #endregion
         
 
@@ -28,6 +27,7 @@ namespace Game.UI
         private void OnDestroy()
         {
             restartButton.onClick.RemoveListener(OnClickRestartButton);
+            GameManager.LevelEndEvent -= DisplayLevelEndCanvas;
         }
 
         private void OnClickRestartButton()
