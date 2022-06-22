@@ -20,6 +20,7 @@ namespace Game.UI
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             restartButton.onClick.AddListener(OnClickRestartButton);
             GameManager.LevelEndEvent += DisplayLevelEndCanvas;
         }
@@ -38,6 +39,7 @@ namespace Game.UI
 
         private void DisplayLevelEndCanvas(bool isWin)
         {
+            Cursor.lockState = CursorLockMode.None;
             if (isWin)
             {
                 resultText.text = "You won!";
@@ -47,8 +49,7 @@ namespace Game.UI
             {
                 resultText.text = "You lose!";
                 hintText.text = "Try again and everything will work out! \n Do you want to try again?";
-            }
-            
+            }            
             levelEndCanvas.gameObject.SetActive(true);
         }
     }

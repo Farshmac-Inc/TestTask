@@ -24,6 +24,7 @@ namespace Game.UI
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             instance = this;
             soundVolume.onValueChanged.AddListener(ChangeSoundVolume);
             musicVolume.onValueChanged.AddListener(ChangeMusicVolume);
@@ -74,11 +75,13 @@ namespace Game.UI
 
         private void MenuOpen()
         {
+            Cursor.lockState = CursorLockMode.None;
             canvas.gameObject.SetActive(true);
         }
 
         private void MenuClose()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             canvas.gameObject.SetActive(false);
         }
     }
