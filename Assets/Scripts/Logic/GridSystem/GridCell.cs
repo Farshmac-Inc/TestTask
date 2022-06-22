@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.GridSystem;
 using UnityEngine;
 
 namespace Game.GridSystem

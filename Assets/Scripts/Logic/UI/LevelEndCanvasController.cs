@@ -16,20 +16,24 @@ namespace Game.UI
         [SerializeField] private Text hintText;
         [SerializeField] private Button restartButton;
 
-        private UnityAction OnClickButton;
-
         #endregion
         
 
         private void Start()
         {
-            restartButton.onClick.AddListener(OnClickButton);
+            restartButton.onClick.AddListener(OnClickRestartButton);
             GameManager.LevelEndEvent += DisplayLevelEndCanvas;
-            OnClickButton += () =>
-            {
-                GameManager.RestartLevel();
-                levelEndCanvas.gameObject.SetActive(false);
-            };
+        }
+
+        private void OnDestroy()
+        {
+            restartButton.onClick.RemoveListener(OnClickRestartButton);
+        }
+
+        private void OnClickRestartButton()
+        {
+            GameManager.RestartLevel();
+            levelEndCanvas.gameObject.SetActive(false);
         }
 
         private void DisplayLevelEndCanvas(bool isWin)

@@ -15,7 +15,7 @@ namespace Game.Audio
 
         internal void Step(bool isMove)
         {
-            if(isMove) source.Play();
+            if(isMove) if(!source.isPlaying) source.Play(); 
             else source.Pause();
         }
 

@@ -16,12 +16,7 @@ namespace Game.UI
         [SerializeField] private Slider musicVolume;
         [SerializeField] private Button restartButton;
 
-        private UnityAction<float> changedSoundValume;
-        private UnityAction<float> changedMusicValume;
-        private UnityAction OnClickButton;
-
-        private static bool isMenuOpen = false;
-
+        private static bool isMenuOpen;
         private static InGameMenu instance;
 
         #endregion
@@ -29,13 +24,17 @@ namespace Game.UI
         private void Start()
         {
             instance = this;
-            soundVolume.onValueChanged.AddListener(changedSoundValume);
-            changedSoundValume += ChangeSoundVolume;
-            musicVolume.onValueChanged.AddListener(changedMusicValume);
-            changedMusicValume += ChangeMusicVolume;
-            restartButton.onClick.AddListener(OnClickButton);
-            OnClickButton += OnClickButtonRestart;
+            soundVolume.onValueChanged.AddListener(ChangeSoundVolume);
+            musicVolume.onValueChanged.AddListener(ChangeMusicVolume);
+            restartButton.onClick.AddListener(OnClickButtonRestart);
             
+        }
+
+        private void OnDestroy()
+        {
+            soundVolume.onValueChanged.RemoveListener(ChangeSoundVolume);
+            musicVolume.onValueChanged.RemoveListener(ChangeMusicVolume);
+            restartButton.onClick.RemoveListener(OnClickButtonRestart);
         }
 
         private void ChangeSoundVolume(float value)

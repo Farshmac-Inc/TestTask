@@ -16,6 +16,7 @@ namespace Game.Mechanics.Enemy
 
         #endregion
 
+        
         private void Start()
         {
             followController = GetComponent<FollowController>();
@@ -23,24 +24,35 @@ namespace Game.Mechanics.Enemy
 
 
             Grid.GridChange += followController.FindPathToPlayer;
-            followController.findPathEvent = Grid.FindPathToPlayer;
+            followController.findPathEvent += Grid.FindPathToPlayer;
             movementController.newPositionEvent += followController.ChangePosition;
-            followController.SetMoveDirection += direction =>
-            {
-                if (direction != Vector2.zero)
-                {
-                    movementController.Move(direction);
-                    ((EnemyAudioManager)audioManager).Step(true);
-                }
-                else ((EnemyAudioManager)audioManager).Step(false);
-            };
+            followController.SetMoveDirection += SetMoveDirectionAction;
+            ((EnemyDamageable)damageableComponent).EnemyKilled += EnemyKilledAction;
+        }
+        private void OnDestroy()
+        {
+            Grid.GridChange -= followController.FindPathToPlayer;
+            followController.findPathEvent -= Grid.FindPathToPlayer;
+            movementController.newPositionEvent -= followController.ChangePosition;
+            followController.SetMoveDirection -= SetMoveDirectionAction;
+            ((EnemyDamageable)damageableComponent).EnemyKilled -= EnemyKilledAction;
+        }
 
-            ((EnemyDamageable)damageableComponent).EnemyKilled += () =>
+        private void SetMoveDirectionAction(Vector2 direction)
+        {
+            if (direction != Vector2.zero)
             {
-                ((EnemyAudioManager)audioManager).Die();
-                animationManager.SetState(UnitState.Die);
-                followController.BlockFollow();
-            };
+                movementController.Move(direction);
+                ((EnemyAudioManager)audioManager).Step(true);
+            }
+            else ((EnemyAudioManager)audioManager).Step(false);
+        }
+
+        private void EnemyKilledAction()
+        {
+            ((EnemyAudioManager)audioManager).Die();
+            animationManager.SetState(UnitState.Die);
+            followController.BlockFollow();
         }
 
         public void PlayerKilled()

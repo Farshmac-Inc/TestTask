@@ -6,16 +6,12 @@ namespace Game.GridSystem
 {
     public class Grid : MonoBehaviour
     {
-        #region Serialized Field
+        #region Field
 
         [SerializeField] private MapGridData mapGridData;
         public static Action GridChange;
         public static Action PlayerKilled;
-
-        #endregion
-
-        #region Private Fields
-
+        
         private static GridCell[,] grid;
         private static PathNode[,] naviGrid;
         private static bool[,] naviGridAvailable;

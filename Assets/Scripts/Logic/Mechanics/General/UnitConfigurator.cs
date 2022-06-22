@@ -28,5 +28,12 @@ namespace Game.Mechanics
             movementController.SetState += animationManager.SetState;
             Killed += damageableComponent.GetDamage;
         }
+
+        private void OnDestroy()
+        {
+            movementController.newPositionEvent -= Grid.SetMovableElementPosition;
+            movementController.SetState -= animationManager.SetState;
+            Killed -= damageableComponent.GetDamage;
+        }
     }
 }
