@@ -10,6 +10,9 @@ namespace Game.Mechanics
 
         private Animation animation;
         private Animator animator;
+        private static readonly int IsRun = Animator.StringToHash("IsRun");
+        private static readonly int Die = Animator.StringToHash("Die");
+        private static readonly int Attack = Animator.StringToHash("Attack");
 
         #endregion
 
@@ -28,18 +31,24 @@ namespace Game.Mechanics
             {
                 case UnitState.Idle:
                 {
-                    animator.SetBool("IsRun", false);
+                    animator.SetBool(IsRun, false);
                     break;
                 }
                 case UnitState.Run:
                 {
-                    animator.SetBool("IsRun", true);
+                    animator.SetBool(IsRun, true);
                     break;
                 }
                 case UnitState.Die:
                 {
-                    animator.SetTrigger("Die");
+                    animator.SetTrigger(Die);
                     break;
+                }
+                case UnitState.Attack:
+                {
+                    animator.SetTrigger(Attack);
+                    break;
+                    ;
                 }
             }
         }

@@ -28,6 +28,11 @@ namespace Game.GridSystem
             if (mapGridData != null) grid = SetGrid(mapGridData);
         }
 
+        public void UploadLevel(MapGridData data)
+        {
+            grid = SetGrid(data);
+        }
+        
         private GridCell[,] SetGrid(MapGridData data)
         {
             grid = new GridCell[data.Grid.GetLength(0), data.Grid.GetLength(1)];
@@ -70,11 +75,22 @@ namespace Game.GridSystem
         {
             ref var startCell = ref grid[lastPos.x, lastPos.y];
             ref var finishCell = ref grid[newPos.x, newPos.y];
-            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Enemy ||
-                startCell.type == GridCellType.Enemy && finishCell.type == GridCellType.Player)
+            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Enemy)
+            {
+                finishCell.gameObject.GetComponent<Mechanics.Enemy.EnemyConfigurator>().PlayerKilled();
+                PlayerKilled?.Invoke();
+                return;
+            }
+
+            if (startCell.type == GridCellType.Enemy && finishCell.type == GridCellType.Player)
             {
                 PlayerKilled?.Invoke();
                 return;
+            }
+
+            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Finish)
+            {
+                Debug.Log("Won");
             }
             finishCell = new GridCell(type, startCell.gameObject);
             startCell = new GridCell(GridCellType.Empty, null);

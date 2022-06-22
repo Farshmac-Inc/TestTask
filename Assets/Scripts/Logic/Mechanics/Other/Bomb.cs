@@ -27,6 +27,7 @@ namespace Game.Mechanics.Other
         {
             yield return new WaitForSeconds(timeBeforeExplosion);
             ExplosionArea(position);
+            GetComponent<Audio.BombAudioManager>().Explosion();
             Destroy(model);
             explosions.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.9f);

@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Audio;
 using UnityEngine;
 using Grid = Game.GridSystem.Grid;
 
@@ -13,6 +14,7 @@ namespace Game.Mechanics
         private protected MovementController movementController;
         private protected AnimationManager animationManager;
         private protected IDamageable damageableComponent;
+        private protected AudioManager audioManager;
         public Action Killed;
 
         #endregion

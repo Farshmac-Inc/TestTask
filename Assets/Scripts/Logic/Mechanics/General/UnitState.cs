@@ -4,6 +4,7 @@
     {
         Idle,
         Run,
-        Die
+        Die,
+        Attack
     }
 }

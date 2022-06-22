@@ -10,6 +10,7 @@ namespace Game.GridSystem
         StoneWall,
         Player,
         Enemy,
-        Spawner
+        Spawner,
+        Finish
     }
 }

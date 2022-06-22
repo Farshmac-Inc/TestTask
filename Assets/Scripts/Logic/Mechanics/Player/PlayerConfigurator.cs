@@ -1,3 +1,4 @@
+using Game.Audio;
 using UnityEngine;
 
 namespace Game.Mechanics.PLayer
@@ -5,6 +6,7 @@ namespace Game.Mechanics.PLayer
     [RequireComponent(typeof(Bomber))]
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(PlayerDamageable))]
+    [RequireComponent(typeof(PlayerAudioManager))]
     public class PlayerConfigurator : UnitConfigurator
     {
         #region Fields
@@ -16,17 +18,35 @@ namespace Game.Mechanics.PLayer
 
         private void Start()
         {
+            audioManager = GetComponent<PlayerAudioManager>();
             bomber = GetComponent<Bomber>();
             playerInput = GetComponent<PlayerInput>();
-            playerInput.MoveEvent += movementController.Move;
+
             playerInput.DroppingBombEvent += bomber.DropBomb;
             GridSystem.Grid.PlayerKilled += Killed;
-            ((PlayerDamageable)damageableComponent).playerKilled += 
-                () =>
+
+            playerInput.MoveEvent += direction =>
+            {
+                if (direction != Vector2.zero)
                 {
-                    animationManager.SetState(UnitState.Die);
-                    playerInput.SetPlayerInputState(false);
-                };
+                    movementController.Move(direction);
+                    
+                    ((PlayerAudioManager)audioManager).Step(true);
+                }
+                else
+                {
+                    ((PlayerAudioManager)audioManager).Step(false);
+                }
+            };
+
+            ((PlayerDamageable)damageableComponent).playerKilled += () =>
+            {
+                ((PlayerAudioManager)audioManager).Die();
+                animationManager.SetState(UnitState.Die);
+                playerInput.SetPlayerInputState(false);
+                GameManager.LevelEnd(false);
+            };
+
             playerInput.SetPlayerInputState(true);
         }
     }
