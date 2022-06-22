@@ -7,7 +7,7 @@ namespace Game.Mechanics.Enemy
     public class EnemyDamageable : MonoBehaviour, IDamageable
     {
         [SerializeField] private float timeToCorpseRemoval;
-        private Action enemyKilled;
+        public Action EnemyKilled;
         public void GetDamage()
         {
             StartCoroutine(CorpseRemovalTimer());
@@ -15,7 +15,7 @@ namespace Game.Mechanics.Enemy
 
         private IEnumerator CorpseRemovalTimer()
         { 
-            enemyKilled?.Invoke();
+            EnemyKilled?.Invoke();
             yield return new WaitForSeconds(timeToCorpseRemoval);
             Destroy(gameObject);
         }

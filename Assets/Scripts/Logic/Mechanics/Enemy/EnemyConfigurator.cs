@@ -21,7 +21,7 @@ namespace Game.Mechanics.Enemy
             Grid.GridChange += followController.FindPathToPlayer;
             followController.findPathEvent = Grid.FindPathToPlayer;
             movementController.newPositionEvent += followController.ChangePosition;
-            ((EnemyConfigurator)damageableComponent).Killed += 
+            ((EnemyDamageable)damageableComponent).EnemyKilled += 
                 () =>
                 {
                     animationManager.SetState(UnitState.Die);

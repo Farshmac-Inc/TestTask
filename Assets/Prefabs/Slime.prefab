@@ -139,9 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c25739b24b8c04799a0c1755adfb94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunAnimationName: 
-  IdleAnimationName: 
-  DieAnimationName: 
 --- !u!114 &86309223661034742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,8 +161,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090219386143568}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 1f499d0eded7a4245b0c36149a43da4f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 91ad402adc56b3940822bc5501ee46c0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -9,6 +9,7 @@ namespace Game.GridSystem
         WoodWall,
         StoneWall,
         Player,
-        Enemy
+        Enemy,
+        Spawner
     }
 }

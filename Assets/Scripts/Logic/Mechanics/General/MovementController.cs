@@ -26,7 +26,6 @@ namespace Game.Mechanics
             charController = GetComponent<CharacterController>();
             var worldPosition = transform.position;
             newPosition = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
-            Debug.LogWarning($"MC: {newPosition}");
         }
 
         /// <summary>

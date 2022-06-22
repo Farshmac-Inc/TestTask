@@ -43,10 +43,27 @@ namespace Game.GridSystem
                 }
 
                 if (cell.type == GridCellType.Player) playerPosition = new Vector2Int(x, z);
-
+                if (cell.type == GridCellType.Spawner)
+                {
+                    cell.type = GridCellType.Empty;
+                    cell.gameObject = null;
+                }
                 cell.isAvailableForMove = cell.type != GridCellType.WoodWall && cell.type != GridCellType.StoneWall;
             }
             return grid;
+        }
+        
+        /// <summary>
+        /// A method that creates an opponent on the grid.
+        /// </summary>
+        /// <param name="position">The position in which the enemy should sleep.</param>
+        /// <param name="prefab">Enemy prefab used to create an instance.</param>
+        /// <param name="type">The type of enemy being created.</param>
+        public static void SpawnEnemy(Vector2Int position, GameObject prefab, GridCellType type)
+        {
+            ref var cell = ref grid[position.x, position.y];
+            cell.type = type;
+            cell.gameObject = Instantiate(prefab, new Vector3(position.x, 0, position.y), new Quaternion());
         }
 
         private static void MoveElement(Vector2Int lastPos, Vector2Int newPos, GridCellType type)
@@ -79,7 +96,7 @@ namespace Game.GridSystem
         {
             MoveElement(lastPos, pos, type);
         }
-        
+
         /// <summary>
         /// A method that checks the ability to remove an object from a cell.
         /// If there is such a possibility, it deletes it.

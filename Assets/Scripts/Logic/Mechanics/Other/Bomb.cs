@@ -8,6 +8,8 @@ namespace Game.Mechanics.Other
         #region Fields
 
         [SerializeField] private float timeBeforeExplosion;
+        [SerializeField] private GameObject model;
+        [SerializeField] private GameObject explosions;
         private Vector2Int position;
 
         #endregion
@@ -25,6 +27,9 @@ namespace Game.Mechanics.Other
         {
             yield return new WaitForSeconds(timeBeforeExplosion);
             ExplosionArea(position);
+            Destroy(model);
+            explosions.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.9f);
             Destroy(this.gameObject);
         }
 
