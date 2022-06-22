@@ -17,8 +17,6 @@ namespace Game.Mechanics.PLayer
 
         #endregion
 
-        
-
         private void Start()
         {
             audioManager = GetComponent<PlayerAudioManager>();
@@ -35,13 +33,13 @@ namespace Game.Mechanics.PLayer
 
             playerInput.SetPlayerInputState(true);
         }
-        
+
         private void OnDestroy()
         {
             playerInput.PauseGameEvent -= GameManager.PauseGameButton;
             playerInput.DroppingBombEvent -= bomber.DropBomb;
             GridSystem.Grid.PlayerKilled -= Killed;
-            
+
             playerInput.MoveEvent -= movementController.Move;
             movementController.SetState -= ((PlayerAudioManager)audioManager).SetState;
             ((PlayerDamageable)damageableComponent).playerKilled -= PlayerKilledAction;

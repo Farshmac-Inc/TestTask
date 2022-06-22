@@ -2,14 +2,17 @@
 
 namespace Game.Audio
 {
-    //[RequireComponent(typeof(AudioListener))]
     public class PlayerAudioManager : AudioManager
     {
+        #region Fields
+
         [SerializeField] private AudioClip[] stepSound;
         [SerializeField] private AudioClip dieSound;
         
         private Mechanics.UnitState state;
 
+        #endregion
+        
         private void Start()
         {
             source.clip = stepSound[Random.Range(0, stepSound.Length - 1)];

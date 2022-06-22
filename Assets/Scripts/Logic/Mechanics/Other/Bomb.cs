@@ -14,7 +14,6 @@ namespace Game.Mechanics.Other
 
         #endregion
         
-
         private void Start()
         {
             StartCoroutine(BombTimer());
@@ -45,8 +44,8 @@ namespace Game.Mechanics.Other
             for (int i = 0; i < explosionAreMask.GetLength(0); i++)
                 for (int j = 0; j < explosionAreMask.GetLength(1); j++)
                 {
-                    if(explosionAreMask[i,j]) 
-                        if(GridSystem.Grid.RemoveElement(epicenterPosition - Vector2Int.one + new Vector2Int(i,j)));
+                    if (explosionAreMask[i, j])
+                        GridSystem.Grid.RemoveElement(epicenterPosition - Vector2Int.one + new Vector2Int(i, j));
                 }
         }
     }

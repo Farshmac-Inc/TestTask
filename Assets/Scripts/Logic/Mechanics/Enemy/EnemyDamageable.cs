@@ -6,8 +6,16 @@ namespace Game.Mechanics.Enemy
 {
     public class EnemyDamageable : MonoBehaviour, IDamageable
     {
+        #region Fields
+
         [SerializeField] private float timeToCorpseRemoval;
         public Action EnemyKilled;
+
+        #endregion
+        
+        /// <summary>
+        /// A method that processes an event caused as a result of damage.
+        /// </summary>
         public void GetDamage()
         {
             StartCoroutine(CorpseRemovalTimer());

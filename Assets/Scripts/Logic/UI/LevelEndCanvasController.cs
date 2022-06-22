@@ -15,8 +15,9 @@ namespace Game.UI
         [SerializeField] private Text resultText;
         [SerializeField] private Text hintText;
         [SerializeField] private Button restartButton;
+
         #endregion
-        
+
 
         private void Start()
         {
@@ -49,7 +50,8 @@ namespace Game.UI
             {
                 resultText.text = "You lose!";
                 hintText.text = "Try again and everything will work out! \n Do you want to try again?";
-            }            
+            }
+
             levelEndCanvas.gameObject.SetActive(true);
         }
     }

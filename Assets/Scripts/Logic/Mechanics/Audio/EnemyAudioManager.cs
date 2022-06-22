@@ -6,12 +6,16 @@ namespace Game.Audio
 {
     public class EnemyAudioManager : AudioManager
     {
+        #region Fields
+
         [SerializeField] private AudioClip[] stepSound;
         [SerializeField] private AudioClip attackSound;
         [SerializeField] private AudioClip dieSound;
 
         private Mechanics.UnitState state;
 
+        #endregion
+        
         private void Start()
         {
             source.clip = stepSound[Random.Range(0, stepSound.Length - 1)];

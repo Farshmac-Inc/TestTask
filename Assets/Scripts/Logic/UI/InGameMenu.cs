@@ -10,7 +10,7 @@ namespace Game.UI
     public class InGameMenu : MonoBehaviour
     {
         #region Fields
-        
+
         [SerializeField] private Canvas canvas;
         [SerializeField] private Slider soundVolume;
         [SerializeField] private Slider musicVolume;
@@ -30,7 +30,6 @@ namespace Game.UI
             musicVolume.onValueChanged.AddListener(ChangeMusicVolume);
             restartButton.onClick.AddListener(OnClickButtonRestart);
             quitGameButton.onClick.AddListener(OnClickButtonQuitGame);
-            
         }
 
         private void OnDestroy()
@@ -43,19 +42,17 @@ namespace Game.UI
 
         private void ChangeSoundVolume(float value)
         {
-            
         }
 
         private void ChangeMusicVolume(float value)
         {
-            
         }
 
         private void OnClickButtonRestart()
         {
             GameManager.RestartLevel();
         }
-        
+
         private void OnClickButtonQuitGame()
         {
             Application.Quit();
@@ -67,7 +64,7 @@ namespace Game.UI
         /// <returns>Whether the menu is currently open or not.</returns>
         public static bool OnClickInGameMenuButton()
         {
-            if(isMenuOpen) instance.MenuClose();
+            if (isMenuOpen) instance.MenuClose();
             else instance.MenuOpen();
             isMenuOpen = !isMenuOpen;
             return isMenuOpen;

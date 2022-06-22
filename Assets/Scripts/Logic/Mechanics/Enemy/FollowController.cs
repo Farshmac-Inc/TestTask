@@ -6,17 +6,16 @@ namespace Game.Mechanics.Enemy
     public class FollowController : MonoBehaviour
     {
         #region Fields
+
         private Vector2Int[] path;
         private int nodeNumber;
         private Vector2Int currentPosition;
-        private bool isEnemyDie; 
+        private bool isEnemyDie;
 
         public Func<Vector2Int, Vector2Int[]> findPathEvent;
         public Action<Vector2> SetMoveDirection;
-        
 
         #endregion
-        
 
         private void Start()
         {
@@ -36,33 +35,45 @@ namespace Game.Mechanics.Enemy
                     var newDirection = path[nodeNumber + 1] - currentPosition;
                     SetMoveDirection?.Invoke(new Vector2(newDirection.x, newDirection.y).normalized);
                 }
-                    
+
                 else if (nodeNumber == path.Length - 1)
                 {
                     var newDirection = path[nodeNumber] - currentPosition;
                     SetMoveDirection?.Invoke(new Vector2(newDirection.x, newDirection.y).normalized);
                 }
             }
-            
         }
 
+        /// <summary>
+        /// A method that asks the grid for a route to the player.
+        /// </summary>
         public void FindPathToPlayer()
         {
-            path = findPathEvent?.Invoke(currentPosition);           
-            nodeNumber = 1; 
+            path = findPathEvent?.Invoke(currentPosition);
+            nodeNumber = 1;
         }
 
-        public void ChangePosition(Vector2Int last, Vector2Int newPos, GridSystem.GridCellType type)
+        /// <summary>
+        /// The method that processes the player's position change
+        /// event checks whether the unit has reached the next route point.
+        /// </summary>
+        /// <param name="lastPos">Previous position of the object in the grid.</param>
+        /// <param name="newPos">The new position of the object in the grid.</param>
+        /// <param name="type">The type of the object.</param>
+        public void ChangePosition(Vector2Int lastPos, Vector2Int newPos, GridSystem.GridCellType type)
         {
             currentPosition = newPos;
             if (currentPosition == path[nodeNumber]) nodeNumber++;
         }
 
+        /// <summary>
+        /// A method that disables the following system.
+        /// </summary>
         public void BlockFollow()
         {
             isEnemyDie = true;
         }
-        
+
         private void OnDrawGizmos()
         {
             if (path != null)

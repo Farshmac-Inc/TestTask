@@ -10,12 +10,11 @@ namespace Game.Mechanics.Enemy
     [RequireComponent(typeof(EnemyAudioManager))]
     public class EnemyConfigurator : UnitConfigurator
     {
-        #region Fields
+        #region Field
 
         private FollowController followController;
 
         #endregion
-
         
         private void Start()
         {
@@ -47,7 +46,12 @@ namespace Game.Mechanics.Enemy
             ((EnemyAudioManager)audioManager).SetState(UnitState.Die);
             followController.BlockFollow();
         }
-
+        
+        /// <summary>
+        /// A method that processes the killing of a given enemy player.
+        /// Triggers the corresponding animation and sound effect,
+        /// as well as disabling the following.
+        /// </summary>
         public void PlayerKilled()
         {
             ((EnemyAudioManager)audioManager).Attack();

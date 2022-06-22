@@ -25,6 +25,9 @@ namespace Game.Mechanics.PLayer
         /// </summary>
         public Action DroppingBombEvent;
 
+        /// <summary>
+        /// An event triggered by pressing the pause button.
+        /// </summary>
         public Action PauseGameEvent;
 
         private void Update()
@@ -34,6 +37,11 @@ namespace Game.Mechanics.PLayer
             if (Input.GetKeyDown(PauseGameButton)) PauseGameEvent?.Invoke();
             MoveEvent?.Invoke(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
         }
+        
+        /// <summary>
+        /// Method specifying the possibility of entering.
+        /// </summary>
+        /// <param name="state">New state of the input system.</param>
         public void SetPlayerInputState(bool state) => isPlayerInputActive = state;
     }
 }
