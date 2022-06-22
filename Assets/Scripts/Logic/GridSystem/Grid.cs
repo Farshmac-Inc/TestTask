@@ -90,7 +90,7 @@ namespace Game.GridSystem
 
             if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Finish)
             {
-                Debug.Log("Won");
+                GameManager.LevelEnd(true);
             }
             finishCell = new GridCell(type, startCell.gameObject);
             startCell = new GridCell(GridCellType.Empty, null);

@@ -31,10 +31,17 @@ namespace Game.Mechanics.Enemy
             if (path == null) FindPathToPlayer();
             else
             {
-                if(nodeNumber < path.Length-1) 
-                    SetMoveDirection?.Invoke(path[nodeNumber+1] - currentPosition);
-                else if(nodeNumber == path.Length-1) 
-                    SetMoveDirection?.Invoke(path[nodeNumber] - currentPosition);
+                if (nodeNumber < path.Length - 1)
+                {
+                    var newDirection = path[nodeNumber + 1] - currentPosition;
+                    SetMoveDirection?.Invoke(new Vector2(newDirection.x, newDirection.y).normalized);
+                }
+                    
+                else if (nodeNumber == path.Length - 1)
+                {
+                    var newDirection = path[nodeNumber] - currentPosition;
+                    SetMoveDirection?.Invoke(new Vector2(newDirection.x, newDirection.y).normalized);
+                }
             }
             
         }

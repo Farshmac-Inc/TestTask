@@ -17,6 +17,7 @@ namespace Game.Mechanics.PLayer
         { 
             playerKilled?.Invoke();
             yield return new WaitForSeconds(timeToRestartLevel);
+            GameManager.LevelEnd(true);
             Destroy(gameObject);
         }
     }

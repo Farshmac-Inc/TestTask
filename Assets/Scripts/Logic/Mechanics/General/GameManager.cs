@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.GridSystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Grid = Game.GridSystem.Grid;
 
 namespace Game
@@ -16,9 +13,10 @@ namespace Game
         [SerializeField] private Grid gridManager;
         [SerializeField] private UI.InGameMenu managerUI;
         private static int lastCompletedLevel = 0;
-        private static int currentLevel;
+        private static int currentLevel = 0;
         private static GameManager instance;
-        private static bool isOpenMainMenu;
+
+        public static Action<bool> LevelEndEvent;
 
         #endregion
 
@@ -42,7 +40,6 @@ namespace Game
         /// </summary>
         public static void RestartLevel()
         {
-            ;
             UploadLevel(currentLevel);
         }
 
@@ -52,24 +49,18 @@ namespace Game
         /// <param name="number">The ordinal number of the level.</param>
         public static void UploadLevel(int number)
         {
-            if (isOpenMainMenu) SceneManager.LoadScene("Level");
             instance.gridManager.UploadLevel(instance.levelList[number]);
+            Time.timeScale = 1;
         }
 
         /// <summary>
         /// Called if the level has been completed.
         /// </summary>
-        /// <param name="result">The result of the level. False - loss. True - winning.</param>
-        public static void LevelEnd(bool result)
+        /// <param name="isWin">The result of the level. False - loss. True - winning.</param>
+        public static void LevelEnd(bool isWin)
         {
-        }
-
-        /// <summary>
-        /// The method loads the main menu scene.
-        /// </summary>
-        public static void UploadMainMenu()
-        {
-            SceneManager.LoadScene("MainMenu");
+            Time.timeScale = 0;
+            LevelEndEvent?.Invoke(isWin);
         }
     }
 }
