@@ -22,6 +22,7 @@ namespace Game.Mechanics.PLayer
             bomber = GetComponent<Bomber>();
             playerInput = GetComponent<PlayerInput>();
 
+            playerInput.PauseGameEvent += GameManager.PauseGameButton;
             playerInput.DroppingBombEvent += bomber.DropBomb;
             GridSystem.Grid.PlayerKilled += Killed;
 

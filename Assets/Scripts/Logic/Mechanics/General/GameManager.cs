@@ -14,7 +14,8 @@ namespace Game
 
         [SerializeField] private MapGridData[] levelList;
         [SerializeField] private Grid gridManager;
-        private static int lastСompletedLevel = 0;
+        [SerializeField] private UI.InGameMenu managerUI;
+        private static int lastCompletedLevel = 0;
         private static int currentLevel;
         private static GameManager instance;
         private static bool isOpenMainMenu;
@@ -25,6 +26,15 @@ namespace Game
         {
             DontDestroyOnLoad(this.gameObject);
             instance = this;
+        }
+
+        /// <summary>
+        /// The method that freezes game time and causes the opening of the ESC menu
+        /// </summary>
+        public static void PauseGameButton()
+        {
+            if (instance.managerUI.OnClickInGameMenuButton()) Time.timeScale = 0;
+            else Time.timeScale = 1;
         }
 
         /// <summary>
