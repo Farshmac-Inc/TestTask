@@ -6,21 +6,20 @@ namespace Game.Mechanics.Enemy
     public class FollowController : MonoBehaviour
     {
         #region Fields
-
-        private MovementController moveControl;
         private Vector2Int[] path;
-        private int nodeNumber = 0;
+        private int nodeNumber;
         private Vector2Int currentPosition;
+        private bool isEnemyDie; 
 
         public Func<Vector2Int, Vector2Int[]> findPathEvent;
         public Action<Vector2> SetMoveDirection;
+        
 
         #endregion
         
 
         private void Start()
         {
-            moveControl = GetComponent<MovementController>();
             var position = transform.position;
             currentPosition = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
             FindPathToPlayer();
@@ -28,6 +27,7 @@ namespace Game.Mechanics.Enemy
 
         private void Update()
         {
+            if (isEnemyDie) return;
             if (path == null) FindPathToPlayer();
             else
             {
@@ -45,10 +45,15 @@ namespace Game.Mechanics.Enemy
             nodeNumber = 1; 
         }
 
-        private void ChangePosition(Vector2Int last, Vector2Int newPos, Game.GridSystem.GridCellType type)
+        public void ChangePosition(Vector2Int last, Vector2Int newPos, GridSystem.GridCellType type)
         {
             currentPosition = newPos;
             if (currentPosition == path[nodeNumber]) nodeNumber++;
+        }
+
+        public void BlockFollow()
+        {
+            isEnemyDie = true;
         }
         
         private void OnDrawGizmos()

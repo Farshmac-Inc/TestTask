@@ -7,7 +7,7 @@ namespace Game.Mechanics.PLayer
     public class PlayerDamageable : MonoBehaviour, IDamageable
     {
         [SerializeField] private float timeToRestartLevel;
-        private Action playerKilled;
+        public Action playerKilled;
         public void GetDamage()
         {
             StartCoroutine(CorpseRemovalTimer());

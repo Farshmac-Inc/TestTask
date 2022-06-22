@@ -3,22 +3,19 @@ using UnityEngine;
 
 namespace Game.Mechanics
 {
-    [RequireComponent(typeof(Animation))]
+    [RequireComponent(typeof(Animator))]
     public class AnimationManager : MonoBehaviour
     {
         #region Fields
 
-        [SerializeField] private string RunAnimationName;
-        [SerializeField] private string IdleAnimationName;
-        [SerializeField] private string DieAnimationName;
-
         private Animation animation;
+        private Animator animator;
 
         #endregion
 
         private void Start()
         {
-            animation = GetComponent<Animation>();
+            animator = GetComponent<Animator>();
         }
 
         /// <summary>
@@ -31,32 +28,19 @@ namespace Game.Mechanics
             {
                 case UnitState.Idle:
                 {
-                    PlayAnimation(IdleAnimationName, state);
+                    animator.SetBool("IsRun", false);
                     break;
                 }
                 case UnitState.Run:
                 {
-                    PlayAnimation(RunAnimationName, state);
+                    animator.SetBool("IsRun", true);
                     break;
                 }
                 case UnitState.Die:
                 {
-                    PlayAnimation(DieAnimationName, state);
+                    animator.SetTrigger("Die");
                     break;
                 }
-            }
-        }
-
-        private void PlayAnimation(string name, UnitState state)
-        {
-            try
-            {
-                animation.Play(name);
-            }
-            catch (Exception e)
-            {
-                //Debug.LogError($"Specify the correct animation name for the state {state}");
-                throw;
             }
         }
     }

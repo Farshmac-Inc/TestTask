@@ -44,10 +44,10 @@ GameObject:
   - component: {fileID: 8127527222612398199}
   - component: {fileID: 6754800050313027488}
   - component: {fileID: 1719791776888509433}
-  - component: {fileID: 8672641699247050753}
   - component: {fileID: 1609821342337008845}
   - component: {fileID: 8808688849406248381}
   - component: {fileID: 86309223661034742}
+  - component: {fileID: 5761892782498936435}
   m_Layer: 12
   m_Name: Slime
   m_TagString: Untagged
@@ -82,13 +82,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.6666667
+  m_Height: 1.5
   m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.38, z: 0}
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!114 &6754800050313027488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,24 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ddd215a01c32f14086b727b42e39931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!111 &8672641699247050753
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090219386143568}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1b444b23a8f0b8644a39df27094135e2, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: d57bb9f35b232f546851ae283a6a4310, type: 3}
-  - {fileID: 7400000, guid: 1b444b23a8f0b8644a39df27094135e2, type: 3}
-  - {fileID: 7400000, guid: 2bfd6fdaf6b23874ca93fca2e578b931, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!114 &1609821342337008845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +154,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 809d6167f8f8280448fb0955be1e8ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToCorpseRemoval: 0
+  timeToCorpseRemoval: 3
+--- !u!95 &5761892782498936435
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090219386143568}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1159745215084782
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,8 +11,8 @@ namespace Game.Mechanics
         #region Fields
 
         private protected MovementController movementController;
-        private AnimationManager animationManager;
-        private IDamageable damageableComponent;
+        private protected AnimationManager animationManager;
+        private protected IDamageable damageableComponent;
         public Action Killed;
 
         #endregion

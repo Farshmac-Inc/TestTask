@@ -43,7 +43,6 @@ namespace Game.GridSystem
                 }
 
                 if (cell.type == GridCellType.Player) playerPosition = new Vector2Int(x, z);
-                if (cell.type == GridCellType.Enemy) Debug.Log($"{cell.type} - {cell.gameObject}");
 
                 cell.isAvailableForMove = cell.type != GridCellType.WoodWall && cell.type != GridCellType.StoneWall;
             }
@@ -54,10 +53,14 @@ namespace Game.GridSystem
         {
             ref var startCell = ref grid[lastPos.x, lastPos.y];
             ref var finishCell = ref grid[newPos.x, newPos.y];
+            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Enemy ||
+                startCell.type == GridCellType.Enemy && finishCell.type == GridCellType.Player)
+            {
+                PlayerKilled?.Invoke();
+                return;
+            }
             finishCell = new GridCell(type, startCell.gameObject);
-            Debug.Log($"1) {startCell.type} - {startCell.gameObject} | {finishCell.type} - {finishCell.gameObject}");
             startCell = new GridCell(GridCellType.Empty, null);
-            Debug.Log($"2) {startCell.type} - {startCell.gameObject} | {finishCell.type} - {finishCell.gameObject}");
             
             if (type == GridCellType.Player)
             {
@@ -86,7 +89,6 @@ namespace Game.GridSystem
         public static bool RemoveElement(Vector2Int cellPos)
         {
             ref var cell = ref grid[cellPos.x, cellPos.y];
-            Debug.Log(cell.type);
             switch (cell.type)
             {
                 case GridCellType.WoodWall:
@@ -96,20 +98,14 @@ namespace Game.GridSystem
                     GridChange?.Invoke();
                     return true;
                 }
-                case GridCellType.StoneWall:
-                {
-                    return false;
-                }
                 case GridCellType.Player:
                 {
                     PlayerKilled?.Invoke();
-                    Debug.Log("Player killed");
                     return true;
                 }
                 case GridCellType.Enemy:
                 {
                     cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
-                    Debug.Log("Enemy killed");
                     return true;
                 }
                 default:

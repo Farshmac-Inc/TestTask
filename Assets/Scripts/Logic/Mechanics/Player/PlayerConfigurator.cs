@@ -21,6 +21,13 @@ namespace Game.Mechanics.PLayer
             playerInput.MoveEvent += movementController.Move;
             playerInput.DroppingBombEvent += bomber.DropBomb;
             GridSystem.Grid.PlayerKilled += Killed;
+            ((PlayerDamageable)damageableComponent).playerKilled += 
+                () =>
+                {
+                    animationManager.SetState(UnitState.Die);
+                    playerInput.SetPlayerInputState(false);
+                };
+            playerInput.SetPlayerInputState(true);
         }
     }
 }

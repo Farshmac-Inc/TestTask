@@ -20,7 +20,13 @@ namespace Game.Mechanics.Enemy
             followController.SetMoveDirection += movementController.Move;
             Grid.GridChange += followController.FindPathToPlayer;
             followController.findPathEvent = Grid.FindPathToPlayer;
-            movementController.newPositionEvent += (old, newPos, type) => Debug.Log(newPos);
+            movementController.newPositionEvent += followController.ChangePosition;
+            ((EnemyConfigurator)damageableComponent).Killed += 
+                () =>
+                {
+                    animationManager.SetState(UnitState.Die);
+                    followController.BlockFollow();
+                };
         }
     }
 }

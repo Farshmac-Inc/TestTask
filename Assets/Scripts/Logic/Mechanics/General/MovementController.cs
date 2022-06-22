@@ -17,7 +17,7 @@ namespace Game.Mechanics
         public Action<UnitState> SetState;
         
         private CharacterController charController;
-        private Vector2Int position;
+        private Vector2Int newPosition;
 
         #endregion
 
@@ -25,7 +25,8 @@ namespace Game.Mechanics
         {
             charController = GetComponent<CharacterController>();
             var worldPosition = transform.position;
-            position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.y));
+            newPosition = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
+            Debug.LogWarning($"MC: {newPosition}");
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Game.Mechanics
         /// <param name="moveVector">The vector of the direction of movement.</param>
         public void Move(Vector2 moveVector)
         {
-            var lastPosition = position;
+            var currentPosition = newPosition;
             if (moveVector == Vector2.zero)
             {
                 SetState?.Invoke(UnitState.Idle);
@@ -47,7 +48,8 @@ namespace Game.Mechanics
             deltaPosition *= Time.deltaTime;
             charController.Move(deltaPosition);
             SetPositionInGrid();
-            if(lastPosition != position) newPositionEvent?.Invoke(position, lastPosition, type);
+            if(currentPosition != newPosition) 
+                newPositionEvent?.Invoke(newPosition, currentPosition, type);
         }
 
         private void Rotate(Vector2 moveVector)
@@ -63,7 +65,7 @@ namespace Game.Mechanics
         private void SetPositionInGrid()
         {
             var worldPosition = transform.position;
-            position = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
+            newPosition = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
         }
 
     }
