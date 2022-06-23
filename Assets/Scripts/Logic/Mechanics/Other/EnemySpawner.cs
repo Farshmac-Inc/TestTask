@@ -36,5 +36,6 @@ public class EnemySpawner : MonoBehaviour
     private void Spawn()
     {
         Grid.SpawnEnemy(spawnPosition, prefab, enemyType);
+        StartCoroutine(SpawnCooldown());
     }
 }

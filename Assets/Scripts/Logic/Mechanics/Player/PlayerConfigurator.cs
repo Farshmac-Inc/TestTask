@@ -50,7 +50,6 @@ namespace Game.Mechanics.PLayer
             ((PlayerAudioManager)audioManager).Die();
             animationManager.SetState(UnitState.Die);
             playerInput.SetPlayerInputState(false);
-            GameManager.LevelEnd(false);
         }
     }
 }
