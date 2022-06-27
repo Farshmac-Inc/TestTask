@@ -16,6 +16,8 @@ namespace Game.Mechanics
         private protected IDamageable damageableComponent;
         private protected AudioManager audioManager;
         public Action Killed;
+        public Action<int, Vector2Int> Setup;
+        public Action<int> SetNewID;
 
         #endregion
         
@@ -27,6 +29,8 @@ namespace Game.Mechanics
             movementController.newPositionEvent += Grid.SetMovableElementPosition;
             movementController.SetState += animationManager.SetState;
             Killed += damageableComponent.GetDamage;
+            Setup += movementController.SetNewID;
+            SetNewID += movementController.SetNewID;
         }
 
         private void OnDestroy()
@@ -34,6 +38,8 @@ namespace Game.Mechanics
             movementController.newPositionEvent -= Grid.SetMovableElementPosition;
             movementController.SetState -= animationManager.SetState;
             Killed -= damageableComponent.GetDamage;
+            Setup -= movementController.SetNewID;
+            SetNewID -= movementController.SetNewID;
         }
     }
 }

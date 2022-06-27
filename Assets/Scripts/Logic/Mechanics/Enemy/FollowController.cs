@@ -60,7 +60,7 @@ namespace Game.Mechanics.Enemy
         /// <param name="lastPos">Previous position of the object in the grid.</param>
         /// <param name="newPos">The new position of the object in the grid.</param>
         /// <param name="type">The type of the object.</param>
-        public void ChangePosition(Vector2Int lastPos, Vector2Int newPos, GridSystem.GridCellType type)
+        public void ChangePosition(Vector2Int newPos, int movableObjectID)
         {
             currentPosition = newPos;
             if (currentPosition == path[nodeNumber]) nodeNumber++;

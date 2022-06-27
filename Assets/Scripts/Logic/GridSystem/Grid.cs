@@ -1,59 +1,139 @@
 using System;
+using System.Collections.Generic;
 using Game.PathFinder;
 using UnityEngine;
 
 namespace Game.GridSystem
 {
+    [RequireComponent(typeof(GridCollector))]
     public class Grid : MonoBehaviour
     {
         #region Field
 
         [SerializeField] private MapGridData mapGridData;
+        private GridCollector collector;
         public static Action GridChange;
         public static Action PlayerKilled;
-        
+
         private static GridCell[,] grid;
         private static PathNode[,] naviGrid;
         private static bool[,] naviGridAvailable;
         private static Vector2Int playerPosition;
+        private static Vector2Int finishPosition;
+
+        private static List<MovableGridObject> movableObjects;
+        private static List<Vector2Int> positionDestroyableObjects;
 
         #endregion
 
         private void Awake()
         {
-            if (mapGridData != null) grid = SetGrid(mapGridData);
+            collector = GetComponent<GridCollector>();
+            if (mapGridData != null)
+                grid = collector.SetGrid(mapGridData, out movableObjects, out positionDestroyableObjects,
+                    out playerPosition, out finishPosition);
+        }
+
+        private static void CheckInteractionMovableObjects(MovableGridObject obj1, MovableGridObject obj2)
+        {
+            switch (obj1.Type)
+            {
+                case GridCellType.Enemy:
+                {
+                    if (obj2.Type == GridCellType.Player)
+                    {
+                        RemoveMovableObject(obj2);
+                        ((Mechanics.Enemy.EnemyConfigurator)obj1.Configurator).PlayerKilled();
+                    }
+
+                    break;
+                }
+                case GridCellType.Player:
+                {
+                    playerPosition = obj2.CurrentPosition;
+                    if (obj2.Type == GridCellType.Enemy)
+                    {
+                        RemoveMovableObject(obj1);
+                        ((Mechanics.Enemy.EnemyConfigurator)obj2.Configurator).PlayerKilled();
+                    }
+                    else if (obj2.CurrentPosition == finishPosition)
+                    {
+                        GameManager.LevelEnd(true);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        private static void PlayerKill()
+        {
+            PlayerKilled?.Invoke();
+        }
+
+
+        private static void MoveElement(Vector2Int newPos, int objectID)
+        {
+            var movingObject = movableObjects[objectID];
+            foreach (var obj in movableObjects)
+            {
+                if (obj.CurrentPosition == newPos)
+                {
+                    CheckInteractionMovableObjects(movingObject, obj);
+                }
+            }
+
+            movingObject.CurrentPosition = newPos;
+        }
+
+        private static void RemoveMovableObject(MovableGridObject obj, int id)
+        {
+            switch (obj.Type)
+            {
+                case GridCellType.Player:
+                {
+                    PlayerKill();
+                    movableObjects.RemoveAt(0);
+                    break;
+                }
+                case GridCellType.Enemy:
+                {
+                    obj.Configurator.Killed?.Invoke();
+                    for (var index = id + 1; index < movableObjects.Count; index++)
+                    {
+                        var movableObject = movableObjects[index];
+                        movableObject.Configurator.SetNewID?.Invoke(id);
+                    }
+
+                    movableObjects.RemoveAt(id);
+                    break;
+                }
+            }
+        }
+
+
+        private static void RemoveMovableObject(MovableGridObject removingObj)
+        {
+            var index = movableObjects.FindIndex((obj) => obj == removingObj);
+            RemoveMovableObject(removingObj, index);
+        }
+
+        private static void RemoveStaticObject(int index)
+        {
+            var obj = positionDestroyableObjects[index];
+            ref var cell = ref grid[obj.x, obj.y];
+            positionDestroyableObjects.RemoveAt(index);
+            Destroy(cell.gameObject);
+            cell = new GridCell(GridCellType.Empty, null);
+            GridChange?.Invoke();
         }
 
         public void UploadLevel(MapGridData data)
         {
-            grid = SetGrid(data);
+            grid = collector.SetGrid(data, out movableObjects, out positionDestroyableObjects, out playerPosition,
+                out finishPosition);
         }
-        
-        private GridCell[,] SetGrid(MapGridData data)
-        {
-            grid = new GridCell[data.Grid.GetLength(0), data.Grid.GetLength(1)];
-            grid = data.Grid;
-            for (var x = 0; x < grid.GetLength(0); x++)
-            for (var z = 0; z < grid.GetLength(1); z++)
-            {
-                ref var cell = ref grid[x, z];
-                if (cell.type != GridCellType.Empty && cell.gameObject != null)
-                {
-                    var prefab = cell.gameObject;
-                    cell.gameObject = Instantiate(prefab, new Vector3(x, 0, z), new Quaternion());
-                }
 
-                if (cell.type == GridCellType.Player) playerPosition = new Vector2Int(x, z);
-                if (cell.type == GridCellType.Spawner)
-                {
-                    cell.type = GridCellType.Empty;
-                    cell.gameObject = null;
-                }
-                cell.isAvailableForMove = cell.type != GridCellType.WoodWall && cell.type != GridCellType.StoneWall;
-            }
-            return grid;
-        }
-        
         /// <summary>
         /// A method that creates an opponent on the grid.
         /// </summary>
@@ -67,46 +147,15 @@ namespace Game.GridSystem
             cell.gameObject = Instantiate(prefab, new Vector3(position.x, 0, position.y), new Quaternion());
         }
 
-        private static void MoveElement(Vector2Int lastPos, Vector2Int newPos, GridCellType type)
-        {
-            ref var startCell = ref grid[lastPos.x, lastPos.y];
-            ref var finishCell = ref grid[newPos.x, newPos.y];
-            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Enemy)
-            {
-                finishCell.gameObject.GetComponent<Mechanics.Enemy.EnemyConfigurator>().PlayerKilled();
-                PlayerKilled?.Invoke();
-                return;
-            }
-
-            if (startCell.type == GridCellType.Enemy && finishCell.type == GridCellType.Player)
-            {
-                PlayerKilled?.Invoke();
-                return;
-            }
-
-            if (startCell.type == GridCellType.Player && finishCell.type == GridCellType.Finish)
-            {
-                GameManager.LevelEnd(true);
-            }
-            finishCell = new GridCell(type, startCell.gameObject);
-            startCell = new GridCell(GridCellType.Empty, null);
-            
-            if (type == GridCellType.Player)
-            {
-                GridChange?.Invoke();
-                playerPosition = newPos;
-            }
-        }
 
         /// <summary>
         /// A method that handles an event triggered by one of the movable game elements (Player, enemies).
         /// </summary>
         /// <param name="pos">The new position of the object in the grid.</param>
-        /// <param name="lastPos">The old position of the object in the grid.</param>
-        /// <param name="type">The type of the object being moved.</param>
-        public static void SetMovableElementPosition(Vector2Int pos, Vector2Int lastPos, GridCellType type)
+        /// <param name="movableObjectID">The sequential number of the object in the list movableObjects</param>
+        public static void SetMovableElementPosition(Vector2Int pos, int movableObjectID)
         {
-            MoveElement(lastPos, pos, type);
+            MoveElement(pos, movableObjectID);
         }
 
         /// <summary>
@@ -115,33 +164,23 @@ namespace Game.GridSystem
         /// </summary>
         /// <param name="cellPos">The grid cell that the method checks.</param>
         /// <returns>The ability to remove an object from a cell.</returns>
-        public static bool RemoveElement(Vector2Int cellPos)
+        public static void RemoveElement(Vector2Int cellPos)
         {
-            ref var cell = ref grid[cellPos.x, cellPos.y];
-            switch (cell.type)
+            for (var id = 0; id < movableObjects.Count; id++)
             {
-                case GridCellType.WoodWall:
+                var movableObject = movableObjects[id];
+                if (movableObject.CurrentPosition == cellPos)
                 {
-                    Destroy(cell.gameObject);
-                    cell = new GridCell(GridCellType.Empty, null);
-                    GridChange?.Invoke();
-                    return true;
+                    RemoveMovableObject(movableObject, id);
                 }
-                case GridCellType.Player:
+            }
+
+            for (var i = 0; i < positionDestroyableObjects.Count; i++)
+            {
+                var destroyableObject = positionDestroyableObjects[i];
+                if (destroyableObject == cellPos)
                 {
-                    PlayerKilled?.Invoke();
-                    cell = new GridCell(GridCellType.Empty, null);
-                    return true;
-                }
-                case GridCellType.Enemy:
-                {
-                    cell.gameObject.GetComponent<Mechanics.UnitConfigurator>().Killed?.Invoke();
-                    cell = new GridCell(GridCellType.Empty, null);
-                    return true;
-                }
-                default:
-                {
-                    return false;
+                    RemoveStaticObject(i);
                 }
             }
         }
