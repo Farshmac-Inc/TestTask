@@ -16,8 +16,9 @@ namespace Game.Mechanics.Enemy
 
         #endregion
         
-        private void Start()
+        public override void Setuper()
         {
+            base.Setuper();
             followController = GetComponent<FollowController>();
             audioManager = GetComponent<EnemyAudioManager>();
 

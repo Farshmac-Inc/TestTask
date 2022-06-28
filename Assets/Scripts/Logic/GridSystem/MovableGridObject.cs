@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Game.GridSystem
 {
     public class MovableGridObject
     {
-        public int id { get; }
+        public int ID { get; }
         public GridCellType Type { get; }
         public GameObject MovableGameObject;
         public Vector2Int CurrentPosition;
@@ -12,12 +13,14 @@ namespace Game.GridSystem
 
         public MovableGridObject(GameObject movableGameObject, GridCellType type, Vector2Int currentPosition, int id)
         {
-            this.MovableGameObject = movableGameObject;
-            this.Type = type;
-            this.CurrentPosition = currentPosition;
-            this.id = id;
+            MovableGameObject = movableGameObject;
+            Type = type;
+            CurrentPosition = currentPosition;
+            ID = id;
             Configurator = movableGameObject.GetComponent<Mechanics.UnitConfigurator>();
+            Configurator.Setuper();
+            Configurator.SetNewID?.Invoke(id);
         }
-        
+
     }
 }

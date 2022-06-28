@@ -20,8 +20,8 @@ namespace Game.Mechanics
         public Action<int> SetNewID;
 
         #endregion
-        
-        private void Awake()
+
+        public virtual void Setuper()
         {
             movementController = GetComponent<MovementController>();
             animationManager = GetComponent<AnimationManager>();
@@ -31,7 +31,9 @@ namespace Game.Mechanics
             Killed += damageableComponent.GetDamage;
             Setup += movementController.SetNewID;
             SetNewID += movementController.SetNewID;
+
         }
+
 
         private void OnDestroy()
         {
@@ -41,5 +43,6 @@ namespace Game.Mechanics
             Setup -= movementController.SetNewID;
             SetNewID -= movementController.SetNewID;
         }
+
     }
 }

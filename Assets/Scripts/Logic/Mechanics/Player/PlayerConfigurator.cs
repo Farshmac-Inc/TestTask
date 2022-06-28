@@ -17,8 +17,9 @@ namespace Game.Mechanics.PLayer
 
         #endregion
 
-        private void Start()
+        public override void Setuper()
         {
+            base.Setuper();
             audioManager = GetComponent<PlayerAudioManager>();
             bomber = GetComponent<Bomber>();
             playerInput = GetComponent<PlayerInput>();

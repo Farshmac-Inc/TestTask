@@ -38,8 +38,7 @@ namespace Game.Mechanics
             var worldPosition = transform.position;
             newPosition = new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
         }
-
-        
+       
         public void SetNewID(int movableObjectID, Vector2Int currentPosition)
         {
             this.movableObjectID = movableObjectID;

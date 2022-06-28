@@ -53,6 +53,7 @@ namespace Game.GridSystem
                     {
                         movableObjects.Add(new MovableGridObject(cell.gameObject,
                             GridCellType.Player, new Vector2Int(x, z), 0));
+                        
                         cell = new GridCell(GridCellType.Empty, null);
                         break;
                     }
